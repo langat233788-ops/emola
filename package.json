@@ -1,19 +1,15 @@
 {
-  "name": "zanaco-bot",
+  "name": "e-mola-app",
   "version": "1.0.0",
-  "description": "",
+  "description": "e-Mola loan application with Telegram approval",
   "main": "server.js",
   "scripts": {
     "start": "node server.js"
   },
-  "type": "commonjs",
-  "engines": {
-    "node": ">=24.0.0"
-  },
   "dependencies": {
-    "axios": "^1.13.2",
-    "dotenv": "^17.2.3",
-    "express": "^5.2.1",
-    "uuid": "^9.0.0"
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "axios": "^1.6.2",
+    "uuid": "^9.0.1"
   }
 }

