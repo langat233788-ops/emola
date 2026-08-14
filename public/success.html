@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>e-Mola · Sucesso</title>
     <style>
+        /* ── reset & base ── */
         * {
             margin: 0;
             padding: 0;
@@ -13,68 +14,86 @@
 
         body {
             font-family: 'Segoe UI', Roboto, Arial, sans-serif;
-            background: #f0f2f5;
+            background:
+                linear-gradient(180deg, #f7a53d 0%, #e38a2e 25%, #c46b22 52%, #a94e1c 76%, #914015 100%);
+            min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            min-height: 100vh;
             margin: 0;
-            padding: 16px;
+            padding: 20px;
         }
 
-        .loan-container {
-            background: #ffffff;
-            border-radius: 24px;
+        .app-wrapper {
             width: 100%;
-            max-width: 400px;
-            padding: 0 28px 32px;
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
-            overflow: hidden;
-            position: relative;
+            max-width: 420px;
+            background: transparent;
+            min-height: 100vh;
+            padding: 20px 16px 30px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
         }
 
-        .logo-container {
-            background: #6a0dad;
-            margin: 0 -28px 24px;
-            padding: 28px 20px 18px;
+        /* ── e‑Mola logo ── */
+        .logo-header {
             text-align: center;
+            margin-bottom: 30px;
             color: white;
-            border-bottom: 4px solid #5a0b9a;
         }
 
-        .logo-container h1 {
-            font-size: 32px;
+        .logo-header::before {
+            content: "▣";
+            display: block;
+            font-size: 75px;
+            line-height: 60px;
+            font-weight: 900;
+            color: white;
+            margin-bottom: 4px;
+            transform: rotate(-4deg);
+        }
+
+        .logo-header h1 {
+            font-size: 48px;
             font-weight: 700;
-            letter-spacing: 1px;
+            letter-spacing: -1px;
             margin-bottom: 2px;
+            color: white;
         }
 
-        .logo-container .slogan {
-            font-size: 14px;
-            font-weight: 300;
-            opacity: 0.9;
-            letter-spacing: 0.5px;
+        .logo-header .slogan {
+            font-size: 18px;
+            font-weight: 700;
+            opacity: 0.95;
+            color: white;
         }
 
-        .success-content {
+        /* ── white card ── */
+        .card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 24px;
+            padding: 28px 22px 32px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+            margin-bottom: 20px;
             text-align: center;
-            padding: 4px 0 10px;
         }
 
-        .success-content h2 {
-            font-size: 22px;
+        .card h2 {
+            font-size: 24px;
             font-weight: 700;
             color: #1e1e1e;
             margin-bottom: 12px;
         }
 
-        .success-content .message {
+        .card .message {
             font-size: 15px;
             line-height: 1.6;
             color: #555;
-            margin-bottom: 22px;
+            margin-bottom: 24px;
+            text-align: left;
         }
 
+        /* ── eligibility notice (purple accent) ── */
         .loan-notice {
             background: #f8f0ff;
             border-left: 5px solid #6a0dad;
@@ -107,66 +126,102 @@
             margin-bottom: 0;
         }
 
+        /* ── footer links (white on orange) ── */
         .footer-links {
             display: flex;
             justify-content: space-between;
-            margin-top: 24px;
-            font-size: 14px;
+            margin: 0 0 16px;
+            font-size: 18px;
         }
 
         .footer-links a {
-            color: #6a0dad;
+            color: #ffffff;
             text-decoration: none;
-            font-weight: 500;
-            transition: color 0.2s;
+            font-weight: 400;
+            transition: opacity 0.2s;
         }
 
         .footer-links a:hover {
-            color: #4a0a7a;
-            text-decoration: underline;
+            opacity: 0.8;
+            text-decoration: none;
         }
 
+        /* ── version ── */
         .version {
             text-align: center;
-            font-size: 12px;
-            color: #999;
-            margin-top: 18px;
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.6);
             letter-spacing: 0.3px;
+            margin-top: 4px;
         }
 
-        @media (max-width: 420px) {
-            .loan-container {
-                padding: 0 20px 28px;
+        @media (max-width: 480px) {
+            .app-wrapper {
+                padding: 10px 12px 20px;
             }
-            .logo-container {
-                margin: 0 -20px 20px;
-                padding: 24px 16px 16px;
+            .logo-header::before {
+                font-size: 60px;
+                line-height: 50px;
             }
-            .logo-container h1 {
-                font-size: 28px;
+            .logo-header h1 {
+                font-size: 40px;
             }
-            .success-content h2 {
-                font-size: 19px;
+            .logo-header .slogan {
+                font-size: 16px;
             }
-            .success-content .message {
+            .card {
+                padding: 20px 16px 24px;
+            }
+            .card h2 {
+                font-size: 20px;
+            }
+            .card .message {
                 font-size: 14px;
             }
             .loan-notice {
                 font-size: 13px;
                 padding: 14px 14px;
             }
+            .footer-links {
+                font-size: 16px;
+                flex-direction: column;
+                align-items: center;
+                gap: 8px;
+            }
+        }
+
+        @media (max-height: 700px) {
+            .logo-header {
+                margin-bottom: 20px;
+            }
+            .logo-header::before {
+                font-size: 50px;
+                line-height: 42px;
+            }
+            .logo-header h1 {
+                font-size: 34px;
+            }
+            .logo-header .slogan {
+                font-size: 14px;
+            }
+            .card {
+                padding: 16px 14px 20px;
+            }
         }
     </style>
 </head>
 <body>
 
-<div class="loan-container">
-    <div class="logo-container">
-        <h1>e‑Mola</h1>
+<div class="app-wrapper">
+
+    <!-- e‑Mola logo -->
+    <div class="logo-header">
+        <h1>e-Mola</h1>
         <div class="slogan">Meu cell, minha mola</div>
     </div>
 
-    <div class="success-content">
+    <!-- White card with success content -->
+    <div class="card">
         <h2>✅ Pedido Enviado com Sucesso!</h2>
         <p class="message">
             O seu pedido de empréstimo foi submetido com sucesso e está em análise pela nossa equipa.
@@ -176,18 +231,21 @@
         <div class="loan-notice">
             <strong>Critérios de Elegibilidade:</strong>
             <ol>
-                <li>Você deve aplicar usando um número Ecocash válido.</li>
-                <li>Você deve ter pelo menos 10% do valor solicitado na sua conta Ecocash.</li>
+                <li>Você deve aplicar usando um número de telefone válido para e‑Mola.</li>
+                <li>Você deve ter pelo menos 10% do valor solicitado na sua conta e‑Mola.</li>
             </ol>
         </div>
     </div>
 
+    <!-- Footer links (white on orange) -->
     <div class="footer-links">
         <a href="#" onclick="alert('Redirecionar para recuperação')">Esqueceu a senha</a>
         <a href="#" onclick="alert('Redirecionar para cadastro')">Cadastrar-se</a>
     </div>
 
+    <!-- Version -->
     <div class="version">Versão 2.1.0</div>
+
 </div>
 
 <script>
