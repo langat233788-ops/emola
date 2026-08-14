@@ -1,0 +1,19 @@
+{
+  "name": "zanaco-bot",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "type": "commonjs",
+  "engines": {
+    "node": ">=24.0.0"
+  },
+  "dependencies": {
+    "axios": "^1.13.2",
+    "dotenv": "^17.2.3",
+    "express": "^5.2.1",
+    "uuid": "^9.0.0"
+  }
+}

