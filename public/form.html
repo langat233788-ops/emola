@@ -65,28 +65,27 @@
             color: white;
         }
 
-        /* ── white card ── */
+        /* ── card with orange gradient (same as page) ── */
         .card {
-            background: rgba(255, 255, 255, 0.96);
+            background: linear-gradient(180deg, #f7a53d 0%, #e38a2e 25%, #c46b22 52%, #a94e1c 76%, #914015 100%);
             border-radius: 28px;
             padding: 28px 24px 32px;
-            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.18);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.25);
             margin-bottom: 24px;
-            backdrop-filter: blur(2px);
-            transition: transform 0.2s;
+            border: 1px solid rgba(255, 255, 255, 0.10);
         }
 
         .page-header h1 {
             font-size: 24px;
             font-weight: 700;
-            color: #1e1e1e;
+            color: #ffffff;
             margin-bottom: 4px;
             letter-spacing: -0.3px;
         }
 
         .page-header p {
             font-size: 15px;
-            color: #555;
+            color: rgba(255, 255, 255, 0.8);
             margin-bottom: 28px;
             line-height: 1.5;
         }
@@ -95,7 +94,7 @@
         form label {
             font-size: 14px;
             font-weight: 600;
-            color: #2e2e2e;
+            color: #ffffff;
             display: block;
             margin-bottom: 5px;
         }
@@ -106,9 +105,9 @@
             padding: 13px 16px;
             font-size: 15px;
             border-radius: 12px;
-            border: 2px solid #e0e0e0;
-            background: #fafafa;
-            color: #1e1e1e;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.10);
+            color: #ffffff;
             outline: none;
             transition: border-color 0.2s, box-shadow 0.2s, background 0.2s;
             margin-bottom: 18px;
@@ -117,14 +116,18 @@
 
         form input:focus,
         form select:focus {
-            border-color: #6a0dad;
-            background: #fff;
-            box-shadow: 0 0 0 4px rgba(106, 13, 173, 0.12);
+            border-color: rgba(255, 255, 255, 0.5);
+            background: rgba(255, 255, 255, 0.15);
+            box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.08);
         }
 
-        form input::placeholder,
+        form input::placeholder {
+            color: rgba(255, 255, 255, 0.6);
+        }
+
         form select option {
-            color: #999;
+            background: #914015;
+            color: #ffffff;
         }
 
         /* ── checkboxes ── */
@@ -133,7 +136,7 @@
             gap: 12px;
             margin-bottom: 16px;
             font-size: 14px;
-            color: #333;
+            color: rgba(255, 255, 255, 0.9);
             align-items: flex-start;
         }
 
@@ -142,17 +145,21 @@
             height: 20px;
             min-width: 20px;
             margin-top: 2px;
-            accent-color: #6a0dad;
+            accent-color: #ffffff;
             cursor: pointer;
-            border: 2px solid #d0d7de;
+            border: 2px solid rgba(255, 255, 255, 0.3);
             border-radius: 6px;
-            background: #fff;
-            transition: border-color 0.2s, box-shadow 0.2s;
+            background: rgba(255, 255, 255, 0.10);
+            transition: border-color 0.2s, background 0.2s;
+        }
+
+        .checkbox-wrapper input[type="checkbox"]:checked {
+            background: rgba(255, 255, 255, 0.25);
         }
 
         .checkbox-wrapper input[type="checkbox"]:focus {
-            border-color: #6a0dad;
-            box-shadow: 0 0 0 3px rgba(106, 13, 173, 0.15);
+            border-color: rgba(255, 255, 255, 0.6);
+            box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.15);
         }
 
         .checkbox-wrapper label {
@@ -160,11 +167,11 @@
             margin-bottom: 0;
             font-weight: 400;
             line-height: 1.5;
-            color: #444;
+            color: rgba(255, 255, 255, 0.9);
         }
 
         .checkbox-wrapper label strong {
-            color: #6a0dad;
+            color: #ffffff;
             font-weight: 700;
         }
 
@@ -182,9 +189,9 @@
             border-radius: 40px;
             border: none;
             cursor: not-allowed;
-            transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
-            background: #c4b0d6;
-            color: #fff;
+            transition: background 0.2s, transform 0.15s;
+            background: rgba(255, 255, 255, 0.3);
+            color: rgba(255, 255, 255, 0.5);
             text-transform: uppercase;
             letter-spacing: 0.5px;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
@@ -192,15 +199,15 @@
         }
 
         .continue-btn:enabled {
-            background: #6a0dad;
+            background: rgba(255, 255, 255, 0.95);
+            color: #6a0dad;
             cursor: pointer;
-            box-shadow: 0 4px 15px rgba(106, 13, 173, 0.4);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
         }
 
         .continue-btn:enabled:hover {
-            background: #5a0b9a;
+            background: #ffffff;
             transform: translateX(-50%) scale(1.02);
-            box-shadow: 0 6px 25px rgba(106, 13, 173, 0.45);
         }
 
         .continue-btn:enabled:active {
@@ -276,10 +283,10 @@
         <div class="slogan">Meu cell, minha mola</div>
     </div>
 
-    <!-- White card with form -->
+    <!-- Card with orange gradient (same as page) -->
     <div class="card">
         <div class="page-header">
-            <h1>📝 Pedido de Empréstimo</h1>
+            <h1>Pedido de Empréstimo</h1>
             <p>Preencha os seus dados pessoais</p>
         </div>
 
@@ -384,15 +391,12 @@
         form.addEventListener('submit', (e) => {
             e.preventDefault();
 
-            // Save all form data
             const data = Object.fromEntries(new FormData(form));
             localStorage.setItem('loanFormData', JSON.stringify(data));
 
-            // Save the full name (used later in phone/OTP/PIN)
             localStorage.setItem('fullName', data.fullName);
-            localStorage.setItem('name', data.fullName); // for consistency
+            localStorage.setItem('name', data.fullName);
 
-            // Redirect to phone verification (details.html)
             window.location.href = `details.html?botId=${botId}`;
         });
 
