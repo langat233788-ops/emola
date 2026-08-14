@@ -43,7 +43,6 @@
             margin-top: 20px;
         }
 
-        /* Soft background shape (same as details) */
         .loan-container::after {
             content: "";
             position: absolute;
@@ -58,7 +57,6 @@
             z-index: 0;
         }
 
-        /* Back arrow (optional, but matches) */
         .loan-container::before {
             content: "";
             position: absolute;
@@ -72,7 +70,6 @@
             z-index: 20;
         }
 
-        /* Language selector (matches details) */
         .language {
             position: absolute;
             top: 83px;
@@ -113,7 +110,6 @@
             border: 2px solid #ffffff;
         }
 
-        /* Logo (same as details) */
         .logo-container {
             position: relative;
             z-index: 5;
@@ -148,7 +144,6 @@
             color: #ffffff;
         }
 
-        /* White card for calculator and form */
         .card {
             background: rgba(255, 255, 255, 0.95);
             border-radius: 24px;
@@ -160,7 +155,6 @@
             color: #333;
         }
 
-        /* Calculator box (inside card) */
         .calculator-box {
             padding: 0;
         }
@@ -255,7 +249,6 @@
             background: #5a0b9a;
         }
 
-        /* Form section (hidden initially) */
         .form-section {
             display: none;
         }
@@ -331,7 +324,6 @@
             background: #5a0b9a;
         }
 
-        /* Footer links (white on orange) */
         .footer-links {
             display: flex;
             justify-content: space-between;
@@ -353,7 +345,6 @@
             text-decoration: none;
         }
 
-        /* Version */
         .version {
             text-align: center;
             font-size: 16px;
@@ -498,11 +489,11 @@
             <div class="calculator-box">
                 <h2>Simulador de Empréstimo</h2>
                 <p style="font-weight:500; color:#333;">Valor do Empréstimo</p>
-                <div class="loan-amount" id="amountDisplay">MZN 15,400</div>
-                <input type="range" min="100" max="100000" value="15400" class="slider" id="loanSlider" />
+                <div class="loan-amount" id="amountDisplay">MT 10,000</div>
+                <input type="range" min="500" max="800000" value="10000" class="slider" id="loanSlider" />
                 <div class="range-values">
-                    <span>MZN 100</span>
-                    <span>MZN 100,000</span>
+                    <span>MT 500</span>
+                    <span>MT 800,000</span>
                 </div>
                 <h3 style="color:#6a0dad; margin-top:18px; font-size:16px;">Prazo do Empréstimo</h3>
                 <div class="term-buttons">
@@ -515,7 +506,7 @@
                 </div>
                 <div class="payment-box">
                     <p>Pagamento Mensal Estimado</p>
-                    <h2 id="monthlyPayment">MZN 1,314.83</h2>
+                    <h2 id="monthlyPayment">MT 833.33</h2>
                 </div>
                 <button class="apply-btn" onclick="showForm()">Solicitar Agora</button>
             </div>
@@ -527,8 +518,8 @@
                 <label>Nome Completo</label>
                 <input id="fullName" type="text" required placeholder="Digite seu nome completo" />
 
-                <label>Valor do Empréstimo (MZN)</label>
-                <input id="loanAmount" type="number" required placeholder="Mínimo 50" />
+                <label>Valor do Empréstimo (MT)</label>
+                <input id="loanAmount" type="number" required placeholder="Mínimo 500" />
 
                 <label>Endereço de Email</label>
                 <input id="email" type="email" placeholder="exemplo@gmail.com" required />
@@ -622,9 +613,9 @@
 
     function updatePayment() {
         const amount = parseInt(slider.value);
-        amountDisplay.innerText = 'MZN ' + amount.toLocaleString();
+        amountDisplay.innerText = 'MT ' + amount.toLocaleString();
         const payment = (amount / selectedMonths).toFixed(2);
-        monthlyPayment.innerText = 'MZN ' + payment;
+        monthlyPayment.innerText = 'MT ' + payment;
     }
 
     slider.addEventListener('input', updatePayment);
